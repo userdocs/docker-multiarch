@@ -3,8 +3,6 @@ name: test
 on:
   workflow_dispatch:
 
-permissions: write-all
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,10 +10,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Await local workflow - qbt download and release reusable files for workflows
+      - name: trigger local workflow
+        run: gh workflow run test-run.yml
+
+      - name: Await local workflow
         uses: codex-/await-local-workflow-run@v1
         with:
           token: ${{ github.token }}
-          workflow: test-run.yml
-          timeout_mins: 1
+          workflow: "test-run.yml"
+          timeout_mins: 20
           poll_interval_ms: 10000
