@@ -16,7 +16,7 @@ jobs:
       - name: Await local workflow - qbt download and release reusable files for workflows
         uses: codex-/await-local-workflow-run@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
           workflow: "test-run.yml"
           timeout_mins: 20
           poll_interval_ms: 10000
