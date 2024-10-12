@@ -2,8 +2,8 @@ name: check for new releases iperf3
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/30 */1 * * *"
+  # schedule:
+  #   - cron: "*/30 */1 * * *"
 
 permissions:
   actions: write
