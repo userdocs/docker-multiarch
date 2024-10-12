@@ -1,4 +1,4 @@
-name: cii
+name: Publish multiarch docker images
 
 on:
   workflow_dispatch:
