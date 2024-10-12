@@ -166,11 +166,11 @@ jobs:
         working-directory: /tmp/digests
         run: |
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")
-          echo "tags: $tags"
-          digests=$(for digest in *; do printf '${{ env.REGISTRY_IMAGE_GHCR }}@sha256:%s ' "$digest"; done)
-          docker buildx imagetools create ${{ env.REGISTRY_IMAGE_GHCR }}:latest $digests
+
+          ghcr_digests=$(for digest in *; do printf '${{ env.REGISTRY_IMAGE_GHCR }}@sha256:%s ' "$digest"; done)
+          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:latest $ghcr_digests
 
       # Inspect images
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:latest
