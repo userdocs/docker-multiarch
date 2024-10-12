@@ -10,6 +10,7 @@ permissions:
 env:
   REGISTRY_IMAGE_GHCR: ghcr.io/${{ github.repository }}
   REGISTRY_IMAGE_DOCKERHUB: ${{ github.repository }}
+  SET_IMAGE_TAG: latest
 
 jobs:
   build:
@@ -168,9 +169,9 @@ jobs:
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")
 
           ghcr_digests=$(for digest in *; do printf '${{ env.REGISTRY_IMAGE_GHCR }}@sha256:%s ' "$digest"; done)
-          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:latest $ghcr_digests
+          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:${{ env.SET_IMAGE_TAG }} $ghcr_digests
 
       # Inspect images
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:latest
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ env.SET_IMAGE_TAG }}
