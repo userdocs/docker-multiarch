@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Await local workflow - qbt download and release reusable files for workflows
-        if: env.trigger_files_workflow == 'yes'
         uses: codex-/await-local-workflow-run@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
