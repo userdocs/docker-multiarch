@@ -1,0 +1,14 @@
+name: ubuntu latest
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: gh cli
+        run: gh release list --json tagName -L 1 -q '.[0].tagName'
