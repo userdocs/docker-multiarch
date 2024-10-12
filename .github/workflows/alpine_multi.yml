@@ -51,21 +51,28 @@ jobs:
         arch: [amd64, arm32v6, arm32v7, arm64v8, i386, ppc64le, riscv64, s390x]
         include:
           - arch: amd64
-            docker_arch: linux/amd64
+            platform: linux/amd64
+
           - arch: arm32v6
-            docker_arch: linux/arm/v6
+            platform: linux/arm/v6
+
           - arch: arm32v7
-            docker_arch: linux/arm/v7
+            platform: linux/arm/v7
+
           - arch: arm64v8
-            docker_arch: linux/arm64
+            platform: linux/arm64
+
           - arch: i386
-            docker_arch: linux/i386
+            platform: linux/i386
+
           - arch: ppc64le
-            docker_arch: linux/ppc64le
+            platform: linux/ppc64le
+
           - arch: riscv64
-            docker_arch: linux/riscv64
+            platform: linux/riscv64
+
           - arch: s390x
-            docker_arch: linux/s390x
+            platform: linux/s390x
 
     name: ${{ matrix.name }} ${{ matrix.os_id }}:${{ matrix.os_version_id }} ${{ matrix.arch }}
 
@@ -81,8 +88,8 @@ jobs:
       - name: Docker multiarch bootstrap
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
-      - name: Create docker multiarch ${{ matrix.docker_arch }} container
-        run: docker run --name multiarch -it -d -w /root -e CXXFLAGS="${{ env.CXXFLAGS }}" -e CPPFLAGS="${{ env.CPPFLAGS }}" -e LDFLAGS="${{ env.LDFLAGS }}" --platform ${{ matrix.docker_arch }} -v ${{ github.workspace }}:/root ${{ matrix.arch }}/${{ matrix.os_id }}:${{ matrix.os_version_id }}
+      - name: Create docker multiarch ${{ matrix.platform }} container
+        run: docker run --name multiarch -it -d -w /root -e CXXFLAGS="${{ env.CXXFLAGS }}" -e CPPFLAGS="${{ env.CPPFLAGS }}" -e LDFLAGS="${{ env.LDFLAGS }}" --platform ${{ matrix.platform }} -v ${{ github.workspace }}:/root ${{ matrix.arch }}/${{ matrix.os_id }}:${{ matrix.os_version_id }}
 
       - name: Run apk update
         run: docker exec multiarch apk update --repository=${{ env.CDN }}
