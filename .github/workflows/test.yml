@@ -17,10 +17,5 @@ jobs:
         id: fetch_latest_tag
         run: |
           latest_tag=$(gh release list --json tagName -L 1 -q '.[0].tagName')
-          echo "LATEST_TAG=${latest_tag}" >> $GITHUB_ENV
+          echo "LATEST_TAG=${latest_tag//+/-plus}" >> $GITHUB_ENV
           echo $latest_tag
-
-      - name: test
-        run: |
-          echo "1: ${{ env.LATEST_TAG }}"
-          echo "2: ${{ env.LATEST_TAG//+/ }}"
