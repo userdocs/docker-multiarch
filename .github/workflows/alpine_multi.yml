@@ -48,10 +48,8 @@ jobs:
         name: [iperf3]
         os_id: [alpine]
         os_version_id: [edge]
-        arch: [i386, amd64, arm32v6, arm32v7, arm64v8, ppc64le, s390x]
+        arch: [amd64, arm32v6, arm32v7, arm64v8, i386, ppc64le, riscv64, s390x]
         include:
-          - arch: i386
-            docker_arch: linux/i386
           - arch: amd64
             docker_arch: linux/amd64
           - arch: arm32v6
@@ -60,8 +58,12 @@ jobs:
             docker_arch: linux/arm/v7
           - arch: arm64v8
             docker_arch: linux/arm64
+          - arch: i386
+            docker_arch: linux/i386
           - arch: ppc64le
             docker_arch: linux/ppc64le
+          - arch: riscv64
+            docker_arch: linux/riscv64
           - arch: s390x
             docker_arch: linux/s390x
 
