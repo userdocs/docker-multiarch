@@ -72,7 +72,7 @@ jobs:
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
           build-args: |
             PLATFORM=linux/${{ matrix.platform }}
-            URL=${{ matrix.URL }}
+            ARCH=${{ matrix.arch }}
 
       - name: Export digest
         run: |

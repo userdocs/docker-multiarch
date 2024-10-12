@@ -1,7 +1,7 @@
 FROM alpine:latest AS builder
 
 ARG PLATFORM
-ARG URL="iperf3-amd64"
+ARG ARCH="amd64"
 
 RUN apk update \
 	&& apk upgrade \
