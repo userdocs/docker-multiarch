@@ -16,6 +16,6 @@ jobs:
         uses: codex-/await-local-workflow-run@v1
         with:
           token: ${{ github.token }}
-          workflow: "test-run.yml"
-          timeout_mins: 20
+          workflow: test-run.yml
+          timeout_mins: 1
           poll_interval_ms: 10000

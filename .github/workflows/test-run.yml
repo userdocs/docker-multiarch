@@ -3,9 +3,6 @@ name: test-run
 on:
   workflow_dispatch:
 
-env:
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   test_job:
     runs-on: ubuntu-latest
