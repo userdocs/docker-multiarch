@@ -74,11 +74,11 @@ jobs:
 
       - name: trigger workflow - iperf3 alpine multi
         if: env.continue_build == 'yes'
-        run: gh workflow run alpine_multi.yml
+        run: gh workflow run "alpine_multi.yml"
 
-      - name: trigger workflow - iperf3 alpine multi
+      - name: trigger workflow - iperf3 cygwin multi
         if: env.continue_build == 'yes'
-        run: gh workflow run cygwin_cmd.yml
+        run: gh workflow run "cygwin_cmd.yml"
 
       - name: Await local workflow - alpine multi
         if: env.continue_build == 'yes'
