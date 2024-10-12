@@ -2,4 +2,6 @@ ARG PLATFORM
 
 FROM --platform=${PLATFORM} alpine:edge
 
-COPY ./iperf3 /usr/local/bin
+WORKDIR /usr/local/bin
+
+COPY iperf3 iperf3
