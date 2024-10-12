@@ -81,10 +81,6 @@ jobs:
             ${{ matrix.name }}/bin/iperf3.exe
             ${{ matrix.name }}/bin/cygwin1.dll
 
-      - name: Archive build
-        if: inputs.artifacts_only == '0'
-        run: Compress-Archive ${{ matrix.name }} ${{ matrix.name }}-amd64-${{ matrix.filename }}win.zip
-
       - name: Host - Bootstrap release tag
         run: echo "release_tag=$(Get-Content -Path iperf3_version)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 

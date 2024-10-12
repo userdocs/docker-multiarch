@@ -13,4 +13,4 @@ gh attestation verify iperf3-amd64 -o userdocs
 ```
 
 > [!NOTE]
-> For the windows builds the archive is not verified but the `iperf3.exe` and `cygwin1.dll` are
+> For the windows builds the archive and the `iperf3.exe` and `cygwin1.dll` are verified.
