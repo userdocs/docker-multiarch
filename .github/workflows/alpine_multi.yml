@@ -87,10 +87,20 @@ jobs:
       LDFLAGS: "--static -static"
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout ${{ github.event.inputs.distinct_id }}
+        uses: actions/checkout@v4
 
-      - name: Docker multiarch bootstrap
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Host - phased updates ${{ github.event.inputs.distinct_id }}
+        run: printf '%s\n' 'APT::Get::Always-Include-Phased-Updates "false";' | sudo tee /etc/apt/apt.conf.d/99-phased-updates
+
+      - name: Host - update ${{ github.event.inputs.distinct_id }}
+        run: sudo apt-get update
+
+      - name: Host - upgrade ${{ github.event.inputs.distinct_id }}
+        run: sudo apt-get -y upgrade
+
+      - name: Host - set up qemu-user-static binfmt-support ${{ github.event.inputs.distinct_id }}
+        run: sudo apt install libpipeline1 qemu-user-static binfmt-support
 
       - name: Create docker multiarch ${{ matrix.platform }} container
         run: docker run --name multiarch -it -d -w /root -e CXXFLAGS="${{ env.CXXFLAGS }}" -e CPPFLAGS="${{ env.CPPFLAGS }}" -e LDFLAGS="${{ env.LDFLAGS }}" --platform ${{ matrix.platform }} -v ${{ github.workspace }}:/root ${{ matrix.arch }}/${{ matrix.os_id }}:${{ matrix.os_version_id }}
