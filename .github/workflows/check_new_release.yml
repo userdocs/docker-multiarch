@@ -57,13 +57,13 @@ jobs:
             printf "%d%03d%03d%03d" "${test_array[@]}"
           }
 
-          upstream_iperf3_tag="${{ env.upstream_iperf3_tag }}"
+          local_iperf3_tag="${{ env.local_iperf3_tag }}"
 
-          if [[ "$(ver "${upstream_iperf3_tag//+/}")" -gt "$(ver "${{ env.local_iperf3_tag }}")" ]]; then
-            printf "%-14s latest:%-10s iperf3-static:%-10s %s\n" "$iray" "${upstream_iperf3_tag//+/}" "${{ env.local_iperf3_tag }}" "< New version available - workflow will be triggered"
+          if [[ "$(ver "${{ env.upstream_iperf3_tag }}")" -gt "$(ver "${local_iperf3_tag//+/}")" ]]; then
+            printf "%-14s remote:%-10s local:%-10s %s\n" "$iray" "${{ env.upstream_iperf3_tag }}" "${local_iperf3_tag//+/}" "< New version available - workflow will be triggered"
             echo "continue_build=yes" >> $GITHUB_ENV
           else
-            printf "%-14s latest:%-10s iperf3-static:%-10s\n" "$iray" "${upstream_iperf3_tag//+/}" "${{ env.local_iperf3_tag }}"
+            printf "%-14s remote:%-10s local:%-10s\n" "$iray" "${{ env.upstream_iperf3_tag }}" "${local_iperf3_tag//+/}"
           fi
 
           echo "continue_build=${{ env.continue_build }}" >> $GITHUB_OUTPUT
