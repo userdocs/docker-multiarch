@@ -22,18 +22,25 @@ jobs:
           - linux/386
         include:
           - platform: linux/amd64
+            arch: amd64
             URL: "iperf3-amd64"
           - platform: linux/arm/v6
+            arch: armv6
             URL: "iperf3-arm32v6"
           - platform: linux/arm/v7
+            arch: armv7
             URL: "iperf3-arm32v7"
           - platform: linux/arm64
+            arch: arm64
             URL: "iperf3-arm64v8"
           - platform: linux/s390x
+            arch: s390x
             URL: "iperf3-s390x"
           - platform: linux/ppc64le
+            arch: ppc64le
             URL: "iperf3-ppc64le"
           - platform: linux/386
+            arch: i386
             URL: "iperf3-i386"
     steps:
       - name: Checkout
@@ -63,10 +70,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get binary
-        run: |
-          curl -L -o ./iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.URL }}"
-
       - name: Build and push by digest
         id: build
         uses: docker/build-push-action@v6
@@ -74,6 +77,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          tags: ghcr.io/${{ github.repository }}:iperf3-${{ matrix.arch }}
           build-args: |
             PLATFORM=${{ matrix.platform }}
             URL=${{ matrix.URL }}
