@@ -190,4 +190,4 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ env.SET_IMAGE_TAG }}
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ needs.build.outputs.latest_tag-key }} ${{ steps.new_tag.outputs.new_tag }}
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ needs.build.outputs.latest_tag-key }}
