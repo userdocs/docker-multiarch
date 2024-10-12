@@ -11,10 +11,13 @@ env:
   REGISTRY_IMAGE_GHCR: ghcr.io/${{ github.repository }}
   REGISTRY_IMAGE_DOCKERHUB: ${{ github.repository }}
   SET_IMAGE_TAG: latest
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      latest_tag: ${{ steps.gh_latest_tag.outputs.latest_tag }}
     strategy:
       fail-fast: false
       matrix:
@@ -41,6 +44,13 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Fetch latest GitHub tag
+        id: gh_latest_tag
+        run: |
+          latest_tag=$(gh release list --json tagName -L 1 -q '.[0].tagName')
+          echo "latest_tag=${latest_tag}" >> $GITHUB_ENV
+          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT"
 
       # Prepare environment variables
       - name: Prepare
@@ -174,10 +184,10 @@ jobs:
         working-directory: /tmp/digests
         run: |
           ghcr_digests=$(for digest in *; do printf '${{ env.REGISTRY_IMAGE_GHCR }}@sha256:%s ' "$digest"; done)
-          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:${{ github.ref_name }} $ghcr_digests
+          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:${{ needs.build.outputs.latest_tag-key }} $ghcr_digests
 
       # Inspect images
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ env.SET_IMAGE_TAG }}
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ github.ref_name }}
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE_GHCR }}:${{ needs.build.outputs.latest_tag-key }} ${{ steps.new_tag.outputs.new_tag }}
