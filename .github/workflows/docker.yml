@@ -172,14 +172,14 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Create and push manifest lists for :${{ env.SET_IMAGE_TAG }} tag
+      # Create and push manifest lists for ${{ env.SET_IMAGE_TAG }} tag
       - name: Create manifest list and push ${{ env.SET_IMAGE_TAG }}
         working-directory: /tmp/digests
         run: |
           ghcr_digests=$(for digest in *; do printf '${{ env.REGISTRY_IMAGE_GHCR }}@sha256:%s ' "$digest"; done)
           docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE_GHCR }}:${{ env.SET_IMAGE_TAG }} $ghcr_digests
 
-      # Create and push manifest lists for version tag
+      # Create and push manifest lists for ${{ needs.build.outputs.latest_tag }} tag
       - name: Create manifest list and push (version)
         working-directory: /tmp/digests
         run: |
