@@ -73,6 +73,7 @@ jobs:
           build-args: |
             PLATFORM=linux/${{ matrix.platform }}
             ARCH=${{ matrix.arch }}
+            REPONAME=${{ github.repository }}
 
       - name: Export digest
         run: |
