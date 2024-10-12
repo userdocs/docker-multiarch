@@ -3,6 +3,9 @@ name: test
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   GH_TOKEN: ${{ github.token }}
 
