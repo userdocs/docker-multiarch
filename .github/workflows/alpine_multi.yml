@@ -190,7 +190,7 @@ jobs:
 
           for filenames in "${release_sorted[@]}"; do
             virustotal_url="$(head -1 "${filenames}" | tr -d '\n')"
-            sed -i -r 's|(\['${filenames//\.url/}'\])\(\)|\1('${virustotal_url}')|' release-body.md
+            sed -i -r 's|(\['${filenames//\.url/}'\])\(\)|\1('${virustotal_url}')|' ${{ github.workspace }}/release-body.md
           done
 
       - uses: stefanzweifel/git-auto-commit-action@v5
