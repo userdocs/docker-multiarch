@@ -3,6 +3,9 @@ name: ubuntu latest
 on:
   workflow_dispatch:
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   job_1:
     runs-on: ubuntu-latest
