@@ -1,7 +1,16 @@
+FROM alpine:latest AS builder
+
 ARG PLATFORM
+ARG URL="iperf3-amd64"
 
-FROM --platform=${PLATFORM} alpine:edge
+RUN apk update \
+	&& apk upgrade \
+	&& apk add sudo \
+	&& adduser -Ds /bin/bash -u 1000 username \
+	&& printf '%s' 'username ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/github
 
-WORKDIR /usr/local/bin
+ADD --chown=username:username --chmod=700 "https://github.com/userdocs/iperf3-static/releases/latest/download/${URL}" /usr/local/bin/iperf3
 
-COPY iperf3 iperf3
+USER username
+
+WORKDIR /home/username
