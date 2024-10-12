@@ -48,9 +48,9 @@ jobs:
       - name: Fetch latest GitHub tag
         id: gh_latest_tag
         run: |
-          latest_tag=$(gh release list --json tagName -L 1 -q '.[0].tagName')
-          echo "latest_tag=${latest_tag}" >> $GITHUB_ENV
-          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT"
+          latest_tag="$(gh release list --json tagName -L 1 -q '.[0].tagName')"
+          echo "latest_tag=${latest_tag}" >>" $GITHUB_ENV"
+          echo "latest_tag=${latest_tag}" >> "$GITHUB_OUTPUT"
 
       # Prepare environment variables
       - name: Prepare
