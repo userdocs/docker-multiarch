@@ -1,13 +1,13 @@
-name: ubuntu latest
+name: test
 
 on:
   workflow_dispatch:
 
-env:
-  GH_TOKEN: ${{ github.token }}
+permissions:
+  actions: write
 
 jobs:
-  job_1:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
