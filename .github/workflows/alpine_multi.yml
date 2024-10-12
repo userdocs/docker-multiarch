@@ -188,14 +188,15 @@ jobs:
 
           readarray -t release_sorted < <(printf '%s\n' "${dependency_version[@]}" | sort)
 
-          printf '%s\n\n' "## Virustotal scan results" >> "${{ github.workspace }}/release-body.md"
-
           for filenames in "${release_sorted[@]}"; do
-            printf '%s\n\n' "[${filenames//\.url/}]($(
-              head -1 "${filenames}" | tr -d '\n'
-            ))" >> "${{ github.workspace }}/release-body.md"
-            rm -f "${filenames}"
+            virustotal_url="$(head -1 "${filenames}" | tr -d '\n')"
+            sed -i -r 's|(\['${filenames//\.url/}'\])\(\)|\1('${virustotal_url}')|' release-body.md
           done
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automated Change
+          file_pattern: "release-body.md"
 
       - name: "Publish release ${{ needs.build.outputs.set-tag }}"
         if: inputs.artifacts_only == '0'
