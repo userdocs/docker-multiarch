@@ -13,5 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: gh cli
-        run: gh release list --json tagName -L 1 -q '.[0].tagName'
+      - name: Fetch latest GitHub tag
+        id: fetch_latest_tag
+        run: |
+          latest_tag=$(gh release list --json tagName -L 1 -q '.[0].tagName')
+          echo "LATEST_TAG=${latest_tag}" >> $GITHUB_ENV
+          echo $latest_tag
