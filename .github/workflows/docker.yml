@@ -65,8 +65,10 @@ jobs:
 
       - name: Get binary
         run: |
-          curl -L -o iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.URL }}"
-          chmod 700 iperf3
+          curl -L -o ./iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.URL }}"
+          chmod 700 ./iperf3
+          ls
+          pwd
 
       - name: Build and push by digest
         id: build
