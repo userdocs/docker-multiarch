@@ -31,7 +31,7 @@ on:
 permissions:
   actions: write
   id-token: write
-  contents: read
+  contents: write
   attestations: write
 
 concurrency:
