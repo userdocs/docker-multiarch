@@ -12,36 +12,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm/v6
-          - linux/arm/v7
-          - linux/arm64
-          - linux/s390x
-          - linux/ppc64le
-          - linux/386
+        arch: [amd64, arm32v6, arm32v7, arm64v8, i386, ppc64le, riscv64, s390x]
+
         include:
-          - platform: linux/amd64
-            arch: amd64
-            URL: "iperf3-amd64"
-          - platform: linux/arm/v6
-            arch: armv6
-            URL: "iperf3-arm32v6"
-          - platform: linux/arm/v7
-            arch: armv7
-            URL: "iperf3-arm32v7"
-          - platform: linux/arm64
-            arch: arm64
-            URL: "iperf3-arm64v8"
-          - platform: linux/s390x
-            arch: s390x
-            URL: "iperf3-s390x"
-          - platform: linux/ppc64le
-            arch: ppc64le
-            URL: "iperf3-ppc64le"
-          - platform: linux/386
-            arch: i386
-            URL: "iperf3-i386"
+          - arch: amd64
+            platform: linux/amd64
+
+          - arch: arm32v6
+            platform: linux/arm/v6
+
+          - arch: arm32v7
+            platform: linux/arm/v7
+
+          - arch: arm64v8
+            platform: linux/arm64
+
+          - arch: i386
+            platform: linux/386
+
+          - arch: ppc64le
+            platform: linux/ppc64le
+
+          - arch: riscv64
+            platform: linux/riscv64
+
+          - arch: s390x
+            platform: linux/s390x
+
     steps:
       - name: Prepare
         run: |
