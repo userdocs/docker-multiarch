@@ -1,0 +1,14 @@
+name: test-run
+
+on:
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo "it worked"

@@ -13,9 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch latest GitHub tag
-        id: fetch_latest_tag
-        run: |
-          latest_tag=$(gh release list --json tagName -L 1 -q '.[0].tagName')
-          echo "LATEST_TAG=${latest_tag//+/-plus}" >> $GITHUB_ENV
-          echo ${latest_tag//+/-plus}
+      - name: Await local workflow - qbt download and release reusable files for workflows
+        if: env.trigger_files_workflow == 'yes'
+        uses: codex-/await-local-workflow-run@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: "test-run.yml"
+          timeout_mins: 20
+          poll_interval_ms: 10000
