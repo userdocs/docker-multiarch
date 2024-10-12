@@ -10,7 +10,7 @@ RUN apk update \
 	&& adduser -Ds /bin/bash -u 1000 username \
 	&& printf '%s' 'username ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/github
 
-ADD --chown=username:username --chmod=700 "https://github.com/{REPO}/releases/latest/download/${URL}" /usr/local/bin/iperf3
+ADD --chown=username:username --chmod=700 "https://github.com/{REPO}/releases/latest/download/iperf3-${ARCH}" /usr/local/bin/iperf3
 
 USER username
 
