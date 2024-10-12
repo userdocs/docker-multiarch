@@ -29,6 +29,7 @@ on:
         options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 permissions:
+  actions: write
   id-token: write
   contents: read
   attestations: write
@@ -36,6 +37,9 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
   build:
@@ -196,7 +200,20 @@ jobs:
           bodyFile: release-body.md
           token: ${{ secrets.GITHUB_TOKEN }}
 
-    name: "Publish iperf3 multi static via alpine release assets"
+      - name: trigger local workflow
+        if: inputs.artifacts_only == '0'
+        run: gh workflow run docker.yml
+
+      - name: Await local workflow
+        if: inputs.artifacts_only == '0'
+        uses: codex-/await-local-workflow-run@v1
+        with:
+          token: ${{ github.token }}
+          workflow: "docker.yml"
+          timeout_mins: 20
+          poll_interval_ms: 10000
+
+    name: "Publish iperf3 static release assets"
 
   rerun-on-failure:
     if: failure() && inputs.skip_rerun == '0'
