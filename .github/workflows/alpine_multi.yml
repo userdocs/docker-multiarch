@@ -155,7 +155,7 @@ jobs:
           subject-path: ${{ env.binary_path }}
 
       - name: sha256sum ${{ github.event.inputs.distinct_id }}
-        run: printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') ${{ matrix.name }}-${{ matrix.arch }}.url
+        run: printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}.url
 
       - name: "Create artifact"
         uses: actions/upload-artifact@v4
