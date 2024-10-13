@@ -32,10 +32,10 @@ jobs:
         run: echo "fake_tag is provided ${{ github.event.inputs.fake_tag }}"
 
       - name: Skip tests if run_tests is false
-        if: ${{ !github.event.inputs.run_tests }}
+        if: ${{ github.event.inputs.run_tests == 'false' }}
         run: echo "Not Running tests..."
 
       - name: Run tests if run_tests is true
-        if: ${{ github.event.inputs.run_tests }}
+        if: ${{ github.event.inputs.run_tests == 'true' }}
         run: |
           echo "Running tests..."
