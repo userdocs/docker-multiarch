@@ -1,26 +1,36 @@
+## software provenance
+
+These release assets can be transparently verified to verify their provenance.
+
+Using Github actions and workflows, the binaries are verified using Github attestation and VirusTotal scanning at build time so that you can be certain the release assets you are using were transparently built from the source code.
+
 ## Github artifact-attestations
 
-Binaries built from the release of `3.17.1+` use [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance)
+<details closed>
+<summary>Expand for details</summary>
 
-Verify the integrity and provenance of an artifact using its associated cryptographically signed attestations - [Github Docs verify artifact attestations](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds#verifying-artifact-attestations-with-the-github-cli)
+Binaries built from the release of `3.17.1+` use [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance) - [Github Docs](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds#verifying-artifact-attestations-with-the-github-cli)
 
-You use `gh` cli to verify - https://cli.github.com/manual/gh_attestation_verify
-
-For example:
+For example:, using `gh` cli - [manual](https://cli.github.com/manual/gh_attestation_verify)
 
 ```bash
 gh attestation verify iperf3-amd64 -o userdocs
 ```
 
 > [!NOTE]
-> For the windows builds the zip archive, `iperf3.exe` and `cygwin1.dll` are verified.
+> For the windows builds the `zip`, `iperf3.exe` and `cygwin1.dll` are verified.
 >
-> For Linux the main static binary is verified.
+> For Linux builds the main static binary is verified.
 
 > [!TIP]
-> The sha256sum of the Github attestations and Virustotal will be the same.
+> The sha256sum of the Github attestations and VirusTotal will be the same.
 
-## Virustotal scan results
+</details>
+
+## VirusTotal scan results
+
+<details closed>
+<summary>Expand for details</summary>
 
 [iperf3-amd64](https://www.virustotal.com/gui/file/84f9851d0647d3d618c66d64cac10ed1eb37583b3aaf3bb0baac88bf446fb10a)
 
@@ -41,3 +51,5 @@ gh attestation verify iperf3-amd64 -o userdocs
 [iperf3-riscv64](https://www.virustotal.com/gui/file/4ae2fb95ae0956b8977286088b5d84743a5a7d5446c0b2ef7b3b5ae530bc4b71)
 
 [iperf3-s390x](https://www.virustotal.com/gui/file/0a2936974f201ed761e7af049bf7d4621956061bb7797bad1a97a9974190af71)
+
+</details>

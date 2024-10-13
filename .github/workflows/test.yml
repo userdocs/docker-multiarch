@@ -2,6 +2,11 @@ name: test
 
 on:
   workflow_dispatch:
+    inputs:
+      fake_tag:
+        description: "Set fake tag to force a build"
+        required: false
+        default: "99.99.99"
 
 permissions:
   actions: write
@@ -10,19 +15,9 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: trigger local workflow
-        run: gh workflow run test-run.yml
-
-      - name: Await local workflow
-        uses: codex-/await-local-workflow-run@v1
-        with:
-          token: ${{ github.token }}
-          workflow: "test-run.yml"
-          timeout_mins: 20
-          poll_interval_ms: 10000
+      - name: Check if fake_tag is provided
+        if: ${{ github.event.inputs.fake_tag != '' }}
+        run: echo "fake_tag is provided: ${{ github.event.inputs.fake_tag }}"
