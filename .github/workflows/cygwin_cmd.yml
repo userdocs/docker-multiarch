@@ -79,10 +79,6 @@ jobs:
             ${{ matrix.name }}/bin/iperf3.exe
             ${{ matrix.name }}/bin/cygwin1.dll
 
-      - name: VirusTotal Analysis URLs
-        if: inputs.artifacts_only == '0'
-        run: echo ${{ steps.virustotal.outputs.analysis }} | cut -d '=' -f 2-4 >> ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
-
       - name: sha256sum ${{ github.event.inputs.distinct_id }}
         run: |
           printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ matrix.name }}/bin/iperf3.exe | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}.url
