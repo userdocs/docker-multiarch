@@ -217,6 +217,7 @@ jobs:
 
   Docker:
     runs-on: ubuntu-latest
+    if: inputs.artifacts_only == '0' && always() && contains(needs.*.result, 'success') && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     name: Docker build and push
     needs: [build, release]
     steps:
