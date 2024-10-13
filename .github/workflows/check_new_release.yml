@@ -72,28 +72,30 @@ jobs:
 
           echo "continue_build=${{ env.continue_build }}" >> $GITHUB_OUTPUT
 
-      - name: trigger workflow - iperf3 alpine multi
+      - name: gh cli trigger and watch local workflow alpine_multi.yml
         if: env.continue_build == 'yes'
-        run: gh workflow run "alpine_multi.yml"
+        run: |
+          workflow_run_id=""
+          workflow_run_name="alpine_multi.yml"
 
-      - name: trigger workflow - iperf3 cygwin multi
-        if: env.continue_build == 'yes'
-        run: gh workflow run "cygwin_cmd.yml"
+          gh workflow run "${workflow_run_name}"
 
-      - name: Await local workflow - alpine multi
-        if: env.continue_build == 'yes'
-        uses: codex-/await-local-workflow-run@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: "alpine_multi.yml"
-          timeout_mins: 20
-          poll_interval_ms: 10000
+          while [[ -z "$workflow_run_id" ]]; do
+            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
+          done
 
-      - name: Await local workflow - cygwin cmd
+          gh run watch "${workflow_run_id}" -i 5 --exit-status
+
+      - name: gh cli trigger and watch local workflow cygwin_cmd.yml
         if: env.continue_build == 'yes'
-        uses: codex-/await-local-workflow-run@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: "cygwin_cmd.yml"
-          timeout_mins: 20
-          poll_interval_ms: 10000
+        run: |
+          workflow_run_id=""
+          workflow_run_name="cygwin_cmd.yml"
+
+          gh workflow run "${workflow_run_name}"
+
+          while [[ -z "$workflow_run_id" ]]; do
+            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
+          done
+
+          gh run watch "${workflow_run_id}" -i 5 --exit-status
