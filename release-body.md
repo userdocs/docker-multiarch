@@ -24,9 +24,9 @@ gh attestation verify iperf3-amd64 -o userdocs
 
 [iperf3-amd64](https://www.virustotal.com/gui/file/84f9851d0647d3d618c66d64cac10ed1eb37583b3aaf3bb0baac88bf446fb10a)
 
-[iperf3-amd64-openssl-win](https://www.virustotal.com/gui/file-analysis/YjZlNjBjODMxOTVkZWEzZTM1OWRjM2E3ODk4ZDBkMDg6MTcyODgzMTk3Ng==/detection)
+[iperf3-amd64-openssl-win](https://www.virustotal.com/gui/file/cafe0a01c5e0c643146433f584acb71571e580e79b2cffd6431ec83a0dacc8ab)
 
-[iperf3-amd64-win](https://www.virustotal.com/gui/file-analysis/YTNkYTkxNjhjN2IzNTRiYjQzZGMxYjgwNjc1MThjZDI6MTcyODgzMTQ2NQ==/detection)
+[iperf3-amd64-win](https://www.virustotal.com/gui/file/2292e9df7fc1c45fde8dcc3a0a3f90cc28263684eb818bb73323efe9595c9c74)
 
 [iperf3-arm32v6](https://www.virustotal.com/gui/file/b36b7535bf7556aa3db2066d0d109bdb31d36a9133ca0439b05eee517bd2da5f)
 
