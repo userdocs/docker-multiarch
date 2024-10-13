@@ -222,12 +222,19 @@ jobs:
       - name: gh cli trigger local workflow
         if: inputs.artifacts_only == '0'
         run: |
-          gh workflow run docker.yml
+          gh workflow run "docker.yml"
 
       - name: gh cli watch triggered workflow
         if: inputs.artifacts_only == '0'
         run: |
-          gh run watch $(gh run list -w docker.yml -s "in_progress" -L 1 -q databaseId -q '.[0].databaseId') -i 5 --exit-status
+          workflow_run_name="docker.yml"
+          workflow_run_id=""
+
+          while [[ -z "$workflow_run_id" ]]; do
+            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
+          done
+
+          gh run watch "${workflow_run_id}" -i 5 --exit-status
 
   rerun-on-failure:
     if: failure() && inputs.skip_rerun == '0'
