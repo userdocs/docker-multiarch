@@ -203,7 +203,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           prerelease: false
-          artifacts: release-artifacts/iperf3-*
+          artifacts: release-artifacts/iperf3-*[!\.url]
           replacesArtifacts: true
           tag: ${{ needs.build.outputs.set-tag }}
           name: iperf3 ${{ needs.build.outputs.set-tag }}
