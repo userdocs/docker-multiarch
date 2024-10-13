@@ -209,7 +209,7 @@ jobs:
           name: iperf3 ${{ needs.build.outputs.set-tag }}
           allowUpdates: true
           bodyFile: release-body.md
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
 
   Docker:
     runs-on: ubuntu-latest
