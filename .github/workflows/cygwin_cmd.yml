@@ -82,7 +82,7 @@ jobs:
       - name: sha256sum ${{ github.event.inputs.distinct_id }}
         run: |
           printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ matrix.name }}/bin/iperf3.exe | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
-          cat ${{ matrix.name }}-${{ matrix.arch }}.url
+          cat ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
 
       - name: Archive build
         run: Compress-Archive ${{ matrix.name }} ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
