@@ -22,22 +22,22 @@ gh attestation verify iperf3-amd64 -o userdocs
 
 ## Virustotal scan results
 
-[iperf3-amd64](https://www.virustotal.com/gui/file-analysis/ODZjYjU4YmJmMmJlZWY4NTJlNDUxZTUxOTMzMTJjMjI6MTcyODc3NzE3Nw==/detection)
+[iperf3-amd64](https://www.virustotal.com/gui/file-analysis/ODZjYjU4YmJmMmJlZWY4NTJlNDUxZTUxOTMzMTJjMjI6MTcyODgyODQ1MA==/detection)
 
 [iperf3-amd64-openssl-win](https://www.virustotal.com/gui/file-analysis/Y2ZiYWM1NGM1MmJiZGM2NGJjZDQwMzQwNmVmYWQ4NzM6MTcyODgyMTMwMQ==/detection)
 
 [iperf3-amd64-win](https://www.virustotal.com/gui/file-analysis/NjI1ZmIxZjVjNTg2OTcxYTZlNmFiYjRlMjM3ZjliODA6MTcyODgyMDc5Mw==/detection)
 
-[iperf3-arm32v6](https://www.virustotal.com/gui/file-analysis/MjU3YTMyM2UxYTBiMzgyNTE1MjJhMDdmNjhjYzM2Y2E6MTcyODc3NzI2MA==/detection)
+[iperf3-arm32v6](https://www.virustotal.com/gui/file-analysis/MjU3YTMyM2UxYTBiMzgyNTE1MjJhMDdmNjhjYzM2Y2E6MTcyODgyODUzMA==/detection)
 
-[iperf3-arm32v7](https://www.virustotal.com/gui/file-analysis/YWYwMmYyMmE5MzRiYmYzYjllN2EzZjQwMmEyZjRlNzQ6MTcyODc3NjM3NA==/detection)
+[iperf3-arm32v7](https://www.virustotal.com/gui/file-analysis/YWYwMmYyMmE5MzRiYmYzYjllN2EzZjQwMmEyZjRlNzQ6MTcyODgyOTg4Mw==/detection)
 
-[iperf3-arm64v8](https://www.virustotal.com/gui/file-analysis/MDdlOTAwNTk2Yjk0MDg4MTg4YmQxYzQ4ZDQ1YWZlNTU6MTcyODc3NzM3Ng==/detection)
+[iperf3-arm64v8](https://www.virustotal.com/gui/file-analysis/MDdlOTAwNTk2Yjk0MDg4MTg4YmQxYzQ4ZDQ1YWZlNTU6MTcyODgyODUzMg==/detection)
 
-[iperf3-i386](https://www.virustotal.com/gui/file-analysis/NmUyMDllNzE3MGI1MzcwMzU4MGFmNDg3NDEyZjAxODY6MTcyODc3NjI4Mw==/detection)
+[iperf3-i386](https://www.virustotal.com/gui/file-analysis/NmUyMDllNzE3MGI1MzcwMzU4MGFmNDg3NDEyZjAxODY6MTcyODgyODQ0Mw==/detection)
 
-[iperf3-ppc64le](https://www.virustotal.com/gui/file-analysis/ODg3NTk5NzIwNjAyNThhMWMwYmUwYzM3YjgyMjg0ODM6MTcyODc3NjY2Mw==/detection)
+[iperf3-ppc64le](https://www.virustotal.com/gui/file-analysis/ODg3NTk5NzIwNjAyNThhMWMwYmUwYzM3YjgyMjg0ODM6MTcyODgyOTM0NQ==/detection)
 
-[iperf3-riscv64](https://www.virustotal.com/gui/file-analysis/OWJlNWNjYmJkOTUzYzMxNDFmOGEwMDNkZjgwMmZjZGE6MTcyODc3NjM1OQ==/detection)
+[iperf3-riscv64](https://www.virustotal.com/gui/file-analysis/OWJlNWNjYmJkOTUzYzMxNDFmOGEwMDNkZjgwMmZjZGE6MTcyODgyODU1NA==/detection)
 
-[iperf3-s390x](https://www.virustotal.com/gui/file-analysis/ZGRlNzU3ODFiNWE5NGM3ZTNkMmYxNzYzYTc3ZGFlMDQ6MTcyODc3NjM3NQ==/detection)
+[iperf3-s390x](https://www.virustotal.com/gui/file-analysis/ZGRlNzU3ODFiNWE5NGM3ZTNkMmYxNzYzYTc3ZGFlMDQ6MTcyODgyODU1Mw==/detection)
