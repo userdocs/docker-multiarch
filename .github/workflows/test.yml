@@ -20,4 +20,5 @@ jobs:
     steps:
       - name: Check if fake_tag is provided
         if: ${{ github.event.inputs.fake_tag != '' }}
-        run: echo "fake_tag is provided: ${{ github.event.inputs.fake_tag }}"
+        run: |
+          echo "fake_tag is provided: ${{ github.event.inputs.fake_tag }}"
