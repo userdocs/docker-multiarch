@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       fake_tag:
-        description: "Set fake tag to force a build"
+        description: "Set fake tag to force a build - 99.99.99"
         required: false
-        default: "99.99.99"
+        default: ""
 
 permissions:
   actions: write
@@ -18,6 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if fake_tag is provided
+        if: ${{ github.event.inputs.fake_tag == '' }}
+        run: |
+          echo "no fakes here"
+
       - name: Check if fake_tag is provided
         if: ${{ github.event.inputs.fake_tag != '' }}
         run: |
