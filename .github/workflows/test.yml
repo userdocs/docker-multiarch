@@ -7,6 +7,11 @@ on:
         description: "Set fake tag to force a build - 99.99.99"
         required: false
         default: ""
+      run_tests:
+        description: "Run tests"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   actions: write
@@ -20,10 +25,17 @@ jobs:
     steps:
       - name: Check if fake_tag is provided
         if: ${{ github.event.inputs.fake_tag == '' }}
-        run: |
-          echo "no fakes here"
+        run: echo "no fakes here"
 
       - name: Check if fake_tag is provided
         if: ${{ github.event.inputs.fake_tag != '' }}
+        run: echo "fake_tag is provided ${{ github.event.inputs.fake_tag }}"
+
+      - name: Skip tests if run_tests is false
+        if: ${{ !github.event.inputs.run_tests }}
+        run: echo "Not Running tests..."
+
+      - name: Run tests if run_tests is true
+        if: ${{ github.event.inputs.run_tests }}
         run: |
-          echo "fake_tag is provided: ${{ github.event.inputs.fake_tag }}"
+          echo "Running tests..."
