@@ -219,18 +219,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: trigger local workflow
+      - name: gh cli trigger local workflow
         if: inputs.artifacts_only == '0'
-        run: gh workflow run docker.yml
+        run: |
+          gh workflow run docker.yml
 
-      - name: Await local workflow
+      - name: gh cli watch triggered workflow
         if: inputs.artifacts_only == '0'
-        uses: codex-/await-local-workflow-run@v1
-        with:
-          token: ${{ github.token }}
-          workflow: "docker.yml"
-          timeout_mins: 20
-          poll_interval_ms: 10000
+        run: |
+          gh run watch $(gh run list -w docker.yml -s "in_progress" -L 1 -q databaseId -q '.[0].databaseId') -i 5
+
+      # - name: Await local workflow
+      #   if: inputs.artifacts_only == '0'
+      #   uses: codex-/await-local-workflow-run@v1
+      #   with:
+      #     token: ${{ github.token }}
+      #     workflow: "docker.yml"
+      #     timeout_mins: 20
+      #     poll_interval_ms: 10000
 
   rerun-on-failure:
     if: failure() && inputs.skip_rerun == '0'
