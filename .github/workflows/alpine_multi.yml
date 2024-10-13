@@ -139,8 +139,10 @@ jobs:
           vt_api_key: ${{ secrets.VT_API_KEY }}
           files: ${{ env.binary_path }}
 
-      # - name: VirusTotal Analysis URLs
-      #   run: echo ${{ steps.virustotal.outputs.analysis }} | cut -d '=' -f 2-4 >> ${{ matrix.name }}-${{ matrix.arch }}.url
+      - name: sha256sum ${{ github.event.inputs.distinct_id }}
+        run: |
+          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}.url
+          cat ${{ matrix.name }}-${{ matrix.arch }}.url
 
       - name: Create tag env
         run: echo "release_tag=$(sed -rn 's|(.*)\[(.*)],\[https://github.com/esnet/iperf],(.*)|\2|p' ${{ matrix.name }}/configure.ac)" >> $GITHUB_ENV
@@ -153,9 +155,6 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: ${{ env.binary_path }}
-
-      - name: sha256sum ${{ github.event.inputs.distinct_id }}
-        run: printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}.url
 
       - name: "Create artifact"
         uses: actions/upload-artifact@v4
