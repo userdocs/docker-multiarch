@@ -101,18 +101,6 @@ jobs:
         id: set-tag
         run: echo "release_tag=${{ env.release_tag }}" >> $env:GITHUB_OUTPUT
 
-      - name: "Create release"
-        if: inputs.artifacts_only == '0'
-        uses: ncipollo/release-action@v1
-        with:
-          prerelease: false
-          artifacts: ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
-          replacesArtifacts: true
-          tag: ${{ env.release_tag }}
-          name: ${{ matrix.name }} ${{ env.release_tag }}
-          allowUpdates: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: "Release - Create artifacts"
         if: inputs.artifacts_only == '0'
         uses: actions/upload-artifact@v4
