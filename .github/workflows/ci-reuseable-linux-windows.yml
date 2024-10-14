@@ -60,9 +60,9 @@ jobs:
       source_branch: ${{ inputs.source_branch }}
       artifacts_only: ${{ inputs.artifacts_only }}
 
-  Docker:
-    uses: ./.github\workflows\ci-docker.yml
-    if: ${{ github.event.inputs.linux == 'true' }}
+  # Docker:
+  #   uses: ./.github\workflows\ci-docker.yml
+  #   if: ${{ github.event.inputs.linux == 'true' }}
 
   Windows:
     uses: ./.github\workflows\ci-windows.yml
