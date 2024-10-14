@@ -67,51 +67,51 @@ env:
 
 jobs:
   Check-for-new-iperf3-tag:
-    if: contains(inputs.skip_new_tag_check, 'true')
+    if: github.event.inputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     with:
-      force_build: ${{ contains(inputs.force_build, 'true') }}
+      force_build: ${{contains(inputs.force_build, 'true') }}
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
-    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  !contains(inputs.linux, 'false') && !contains(inputs.linux_build_type, 'false')
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  github.event.inputs.linux == 'false' && github.event.inputs.linux_build_type == 'true'
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
       GH_TOKEN: ${{ github.token }}
     with:
-      source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
-      source_branch: ${{ inputs.source_branch || 'master' }}
-      artifacts_only: ${{ contains(inputs.artifacts_only, 'true') }}
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
 
   Linux-Crossbuild:
     needs: Check-for-new-iperf3-tag
-    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && !contains(inputs.linux, 'false') && contains(inputs.linux_build_type, 'true')
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'false' && github.event.inputs.linux_build_type == 'false'
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
       GH_TOKEN: ${{ github.token }}
     with:
-      source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
-      source_branch: ${{ inputs.source_branch || 'master' }}
-      artifacts_only: ${{ contains(inputs.artifacts_only, 'true') }}
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
 
   Docker:
     needs: [Check-for-new-iperf3-tag, Linux-Emulation, Linux-Crossbuild]
-    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && !contains(inputs.linux, 'false') && contains(inputs.artifacts_only, 'true') )
+    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'false' && github.event.inputs.artifacts_only == 'false' )
     uses: ./.github/workflows/ci-docker.yml
 
   Windows:
     needs: [Check-for-new-iperf3-tag]
-    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && !contains(inputs.windows, 'false')
+    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.windows == 'false'
     uses: ./.github/workflows/ci-windows.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
       GH_TOKEN: ${{ github.token }}
     with:
-      source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
-      source_branch: ${{ inputs.source_branch || 'master' }}
-      artifacts_only: ${{ contains(inputs.artifacts_only, 'true') }}
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
 
   rerun-on-failure:
     needs:
@@ -122,12 +122,12 @@ jobs:
         Docker,
         Windows,
       ]
-    if: always() && failure() && !contains(inputs.skip_rerun, 'false')
+    if: always() && failure() && inputs.skip_rerun == '0'
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Trigger rerun workflow on job failures
         run: |
-          inputs_retries="${{ inputs.retries || '1' }}"
+          inputs_retries="${{ inputs.retries }}"
           gh workflow run rerun.yml -f run_id=${{ github.run_id }} -f attempts=${{ github.run_attempt }} -f retries=${inputs_retries:-1}
