@@ -70,7 +70,7 @@ jobs:
     if: inputs.skip_new_tag_check == 'false' || contains('inputs.skip_new_tag_check', 'true')
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     with:
-      force_build: ${{contains(inputs.force_build, 'true') }}
+      force_build: ${{ inputs.force_build == 'false' || contains('inputs.force_build', 'true' }}
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
