@@ -2,32 +2,22 @@ name: Build iperf3 x64 static via cygwin-cmd
 
 on:
   workflow_call:
-  workflow_dispatch:
     inputs:
       source_repo:
-        description: "Define the git repo used for the build"
+        type: string
         required: true
-        default: "https://github.com/esnet/iperf.git"
       source_branch:
-        description: "Specify the branch to build"
+        type: string
         required: true
-        default: "master"
       artifacts_only:
-        description: "No release - artifacts only"
-        required: true
-        default: false
         type: boolean
+        required: true
       skip_rerun:
-        description: "Skip rerun?"
-        required: true
-        default: true
         type: boolean
-      retries:
-        description: "Number of rerun retries"
         required: true
-        default: "1"
-        type: choice
-        options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      retries:
+        type: number
+        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

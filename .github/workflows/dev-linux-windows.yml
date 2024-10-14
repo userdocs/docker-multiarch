@@ -15,7 +15,7 @@ on:
       artifacts_only:
         description: "No release - artifacts only"
         required: true
-        default: true
+        default: false
         type: boolean
       skip_rerun:
         description: "Skip rerun?"
