@@ -1,4 +1,4 @@
-name: CI - Windows build
+name: ci - windows binary build
 
 on:
   workflow_call:

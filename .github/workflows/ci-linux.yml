@@ -1,4 +1,4 @@
-name: CI - Linux binary build
+name: ci - linux binary build
 
 on:
   workflow_call:
