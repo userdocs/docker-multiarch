@@ -2,7 +2,7 @@
 
 github_repo="${1:-"https://github.com/esnet/iperf.git"}"
 github_branch="${2:-"master"}"
-crossbuild_target="${3:-"x86_64-linux-musl"}"
+crossbuild_target="${3:-${CC/-gcc/}}"
 
 printf '\n%s\n' "Building iperf3 for $crossbuild_target"
 printf '%s\n\n' "repo: $github_repo branch:$github_branch"
