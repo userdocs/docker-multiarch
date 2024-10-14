@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# A very simple script to cross-compile iperf3 with openssl for variety of targets using ghcr.io/userdocs/qbt-musl-cross-make docker images
+#
+# Example - to cross-compile iperf3 for aarch64-linux-musl save the script in ~/iperf3 then use the following command:
+#
+# docker run -it -w /root -v ~/iperf3:/root ghcr.io/userdocs/qbt-musl-cross-make:aarch64-linux-musl /bin/bash crossbuild.sh
+
 github_repo="${1:-"https://github.com/esnet/iperf.git"}"
 github_branch="${2:-"master"}"
 crossbuild_target="${3:-${CC/-gcc/}}"
@@ -7,8 +13,6 @@ arch="${4:-x86_64}"
 
 printf '\n%s\n' "Building iperf3 for $crossbuild_target"
 printf '%s\n\n' "repo: $github_repo branch:$github_branch"
-
-# docker run -it -w /root -v ~/iperf3:/root ghcr.io/userdocs/qbt-musl-cross-make:aarch64-linux-musl /bin/bash crossbuild.sh
 
 apk update
 
