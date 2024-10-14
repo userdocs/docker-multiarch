@@ -4,6 +4,11 @@ name: ci - reusable
 on:
   workflow_dispatch:
     inputs:
+      skip_new_tag_check:
+        description: "Skip new tag check?"
+        required: true
+        default: true
+        type: boolean
       linux_build_type:
         description: "Build iperf3 using qemu emulation"
         required: true
@@ -56,12 +61,12 @@ env:
 
 jobs:
   Check-for-new-iperf3-tag:
-    if: ${{ github.event.inputs.linux == 'hwllo' }}
+    if: github.event.inputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
 
   Linux-Emulation:
-    needs: [Check-for-new-iperf3-tag]
-    if: ${{ github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true' }}
+    needs: Check-for-new-iperf3-tag
+    if: always() && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true'
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -72,8 +77,8 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   Linux-Crossbuild:
-    needs: [Check-for-new-iperf3-tag]
-    if: ${{ github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'false' }}
+    needs: Check-for-new-iperf3-tag
+    if: always() && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'false'
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
