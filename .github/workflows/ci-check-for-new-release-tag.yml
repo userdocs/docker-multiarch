@@ -79,31 +79,3 @@ jobs:
           fi
 
           echo "continue_build=${{ env.continue_build }}" >> $GITHUB_OUTPUT
-
-      - name: gh cli trigger and watch local workflow alpine_multi.yml
-        if: env.continue_build == 'yes'
-        run: |
-          workflow_run_id=""
-          workflow_run_name="alpine_multi.yml"
-
-          gh workflow run "${workflow_run_name}"
-
-          while [[ -z "$workflow_run_id" ]]; do
-            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
-          done
-
-          gh run watch "${workflow_run_id}" -i 5 --exit-status
-
-      - name: gh cli trigger and watch local workflow cygwin_cmd.yml
-        if: env.continue_build == 'yes'
-        run: |
-          workflow_run_id=""
-          workflow_run_name="cygwin_cmd.yml"
-
-          gh workflow run "${workflow_run_name}"
-
-          while [[ -z "$workflow_run_id" ]]; do
-            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
-          done
-
-          gh run watch "${workflow_run_id}" -i 5 --exit-status

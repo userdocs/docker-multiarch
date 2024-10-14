@@ -64,6 +64,12 @@ jobs:
     if: github.event.inputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo ${{ needs.Check-for-new-iperf3-tag.outputs.should_skip }}"
+
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
     if: always() && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true'
