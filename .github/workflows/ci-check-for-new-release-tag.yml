@@ -8,7 +8,6 @@ on:
         required: false
     outputs:
       continue_build:
-        description: "The first job output"
         value: ${{ jobs.check_release.outputs.continue_build }}
 
 env:
