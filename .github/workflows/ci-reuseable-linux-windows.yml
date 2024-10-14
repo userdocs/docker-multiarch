@@ -50,7 +50,7 @@ env:
 
 jobs:
   Linux:
-    uses: ./.github\workflows\ci-linux.yml
+    uses: ./.github\workflows\ci_linux.yml
     if: ${{ github.event.inputs.linux == 'true' }}
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -61,11 +61,11 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   # Docker:
-  #   uses: ./.github\workflows\ci-docker.yml
+  #   uses: ./.github\workflows\ci_docker.yml
   #   if: ${{ github.event.inputs.linux == 'true' }}
 
   Windows:
-    uses: ./.github\workflows\ci-windows.yml
+    uses: ./.github\workflows\ci_windows.yml
     if: ${{ github.event.inputs.windows == 'true' }}
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
