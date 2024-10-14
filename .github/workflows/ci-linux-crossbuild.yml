@@ -99,7 +99,7 @@ jobs:
         run: docker exec multiarch apk upgrade --repository=${{ env.CDN }}
 
       - name: mkdir -p /root/local
-        run: docker exec multiarch /bin/bash /root/crossbuild.sh ${{ inputs.source_repo }} ${{ inputs.source_branch }} ${{ matrix.qbt-musl-cross-make }}
+        run: docker exec multiarch /bin/bash /root/crossbuild.sh ${{ inputs.source_repo }} ${{ inputs.source_branch }} ${{ matrix.qbt-musl-cross-make }} ${{ matrix.arch }}
 
       - name: Rename ${{ matrix.name }} to ${{ matrix.name }}-${{ matrix.arch }}
         run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.arch }}

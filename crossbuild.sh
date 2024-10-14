@@ -3,6 +3,7 @@
 github_repo="${1:-"https://github.com/esnet/iperf.git"}"
 github_branch="${2:-"master"}"
 crossbuild_target="${3:-${CC/-gcc/}}"
+arch="${4:-x86_64}"
 
 printf '\n%s\n' "Building iperf3 for $crossbuild_target"
 printf '%s\n\n' "repo: $github_repo branch:$github_branch"
@@ -17,7 +18,6 @@ LDFLAGS="--static -static -L/root/local/lib"
 cd || exit
 mkdir -p /root/local
 
-arch="aarch64"
 repo="$(cat /etc/apk/repositories | sed -rn 's|https://dl-cdn.alpinelinux.org/alpine/(.*)/(.*)|\1|p' | head -1)"
 openssl_libs_static="$(apk info openssl-libs-static | head -1 | awk '{ print $1 }')"
 openssl_dev="$(apk info openssl-dev | head -1 | awk '{ print $1 }')"
