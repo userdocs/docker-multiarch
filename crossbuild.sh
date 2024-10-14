@@ -1,11 +1,11 @@
 #!/bin/bash
 
 github_repo="${1:-"https://github.com/esnet/iperf.git"}"
-github_branch="${2:"-master"}"
-crossbuild_target="${3:"-x86_64-linux-musl"}"
+github_branch="${2:-"master"}"
+crossbuild_target="${3:-"x86_64-linux-musl"}"
 
-printf '%s\n' "Building iperf3 for $crossbuild_target"
-printf '%s\n' "repo: $github_repo branch:$github_branch"
+printf '\n%s\n' "Building iperf3 for $crossbuild_target"
+printf '%s\n\n' "repo: $github_repo branch:$github_branch"
 
 # docker run -it -w /root -v ~/iperf3:/root ghcr.io/userdocs/qbt-musl-cross-make:aarch64-linux-musl /bin/bash crossbuild.sh
 
