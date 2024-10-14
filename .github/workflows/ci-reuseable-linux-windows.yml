@@ -75,7 +75,7 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo "test: ${{ needs.Check-for-new-iperf3-tag.outputs.should_skip }}"
+          echo "test: ${{ needs.Check-for-new-iperf3-tag.outputs.continue_build }}"
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
