@@ -4,21 +4,6 @@ name: ci - reusable
 on:
   workflow_dispatch:
     inputs:
-      force_build:
-        description: "Force a build"
-        required: false
-        default: false
-        type: boolean
-      skip_new_tag_check:
-        description: "Skip new tag check?"
-        required: true
-        default: false
-        type: boolean
-      linux_build_type:
-        description: "Build iperf3 using qemu emulation"
-        required: true
-        default: false
-        type: boolean
       source_repo:
         description: "Define the git repo used for the build"
         required: true
@@ -27,6 +12,21 @@ on:
         description: "Specify the branch to build"
         required: true
         default: "master"
+      skip_new_tag_check:
+        description: "Skip new tag check?"
+        required: true
+        default: false
+        type: boolean
+      force_build:
+        description: "Force a build"
+        required: false
+        default: false
+        type: boolean
+      linux_build_type:
+        description: "Build iperf3 using qemu emulation"
+        required: true
+        default: false
+        type: boolean
       artifacts_only:
         description: "No release - artifacts only"
         required: true
