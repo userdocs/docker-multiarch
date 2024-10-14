@@ -65,6 +65,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: test
+        run: |
+          echo "yolo: ${{ inputs.source_repo }}"
+          exit
+
       - name: Install cygwin-installer.cmd
         run: .\cygwin-installer.cmd
 
