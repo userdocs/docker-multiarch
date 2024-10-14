@@ -4,10 +4,8 @@ on:
   workflow_call:
     inputs:
       force_build:
-        description: "Force a build"
-        required: false
-        default: false
         type: boolean
+        required: false
   # schedule:
   #   - cron: "*/30 */1 * * *"
 
