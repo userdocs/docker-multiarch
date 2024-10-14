@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# docker run -it -w /root -v ~/iperf:/root ghcr.io/userdocs/qbt-musl-cross-make:aarch64-linux-musl
+# docker run -it -w /root -v ~/iperf3:/root ghcr.io/userdocs/qbt-musl-cross-make:aarch64-linux-musl
 
 apk update
 
-CXXFLAGS="/root/local/include"
-LDFLAGS="/root/local/lib"
+CXXFLAGS="--static -static -I/root/local/include"
+LDFLAGS="--static -static -L/root/local/lib"
 
 cd || exit
 mkdir -p /root/local
