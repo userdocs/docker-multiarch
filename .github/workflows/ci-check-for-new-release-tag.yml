@@ -71,9 +71,7 @@ jobs:
 
           if [[ "$(ver "${{ env.upstream_iperf3_tag }}")" -gt "$(ver "${local_iperf3_tag//+/}")" ]]; then
             printf "%-14s remote:%-10s local:%-10s %s\n" "$iray" "${{ env.upstream_iperf3_tag }}" "${local_iperf3_tag//+/}" "< New version available - workflow will be triggered"
-            echo "continue_build=yes" >> $GITHUB_ENV
+            echo "continue_build=yes" >> $GITHUB_OUTPUT
           else
             printf "%-14s remote:%-10s local:%-10s\n" "$iray" "${{ env.upstream_iperf3_tag }}" "${local_iperf3_tag//+/}"
           fi
-
-          echo "continue_build=${{ env.continue_build }}" >> $GITHUB_OUTPUT
