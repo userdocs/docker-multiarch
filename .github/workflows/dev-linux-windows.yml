@@ -1,0 +1,49 @@
+# .github/workflows/dev-linux-windows.yml
+name: Dev Linux and Windows
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: "Define the git repo used for the build"
+        required: true
+        default: "https://github.com/esnet/iperf.git"
+      source_branch:
+        description: "Specify the branch to build"
+        required: true
+        default: "master"
+      artifacts_only:
+        description: "No release - artifacts only"
+        required: true
+        default: true
+        type: boolean
+      skip_rerun:
+        description: "Skip rerun?"
+        required: true
+        default: true
+        type: boolean
+      retries:
+        description: "Number of rerun retries"
+        required: true
+        default: "1"
+        type: choice
+        options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+jobs:
+  Linux:
+    uses: ./.github/workflows/alpine_multi.yml
+    with:
+      source_repo: "${{ inputs.source_repo }}"
+      source_branch: "${{ inputs.source_branch }}"
+      artifacts_only: "${{ inputs.artifacts_only }}"
+      skip_rerun: "${{ inputs.skip_rerun }}"
+      retries: "${{ inputs.retries }}"
+
+  Windows:
+    uses: ./.github/workflows/cygwin_cmd.yml
+    with:
+      source_repo: "${{ inputs.source_repo }}"
+      source_branch: "${{ inputs.source_branch }}"
+      artifacts_only: "${{ inputs.artifacts_only }}"
+      skip_rerun: "${{ inputs.skip_rerun }}"
+      retries: "${{ inputs.retries }}"
