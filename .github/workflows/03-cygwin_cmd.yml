@@ -1,4 +1,4 @@
-name: Build iperf3 x64 static via cygwin-cmd
+name: Windows - build - iperf3 x86_64 static binaries
 
 on:
   workflow_call:

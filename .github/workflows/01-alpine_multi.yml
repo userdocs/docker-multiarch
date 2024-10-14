@@ -1,4 +1,4 @@
-name: Build iperf3 multi static via alpine
+name: Linux - build - iperf3 static Alpine multiarch
 
 on:
   workflow_call:

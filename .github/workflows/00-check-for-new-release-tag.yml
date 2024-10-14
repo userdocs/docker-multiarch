@@ -1,4 +1,4 @@
-name: check for new releases iperf3
+name: Check for new iperf3 release tag
 
 on:
   workflow_dispatch:
