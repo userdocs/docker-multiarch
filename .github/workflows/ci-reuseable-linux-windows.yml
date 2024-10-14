@@ -77,12 +77,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: |
-          echo "test: ${{ needs.Check-for-new-iperf3-tag.outputs.continue_build }}"
+        run: echo "${{ needs.Check-for-new-iperf3-tag.outputs.continue_build }}"
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
-    if: always() && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true'
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true'
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -94,7 +93,7 @@ jobs:
 
   Linux-Crossbuild:
     needs: Check-for-new-iperf3-tag
-    if: always() && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'false'
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'false'
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -106,12 +105,12 @@ jobs:
 
   Docker:
     needs: [Check-for-new-iperf3-tag, Linux-Emulation, Linux-Crossbuild]
-    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' )
+    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' )
     uses: ./.github/workflows/ci-docker.yml
 
   Windows:
     needs: [Check-for-new-iperf3-tag]
-    if: ${{ github.event.inputs.windows == 'true' }}
+    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.windows == 'true'
     uses: ./.github/workflows/ci-windows.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
