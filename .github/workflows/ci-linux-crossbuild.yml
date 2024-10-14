@@ -35,30 +35,30 @@ jobs:
         include:
           - arch: x86
             qbt-musl-cross-make: "i686-linux-musl"
-
+            release_name: i386
           - arch: x86_64
             qbt-musl-cross-make: "x86_64-linux-musl"
-
+            release_name: amd64
           - arch: armhf
             qbt-musl-cross-make: "armv6-linux-musleabihf"
-
+            release_name: arm32v6
           - arch: armv7
             qbt-musl-cross-make: "armv6-linux-musleabihf"
-
+            release_name: arm32v7
           - arch: armv7
             qbt-musl-cross-make: "armv7l-linux-musleabihf"
-
           - arch: aarch64
             qbt-musl-cross-make: "aarch64-linux-musl"
-
+            release_name: arm64v8
           - arch: ppc64le
             qbt-musl-cross-make: "powerpc64le-linux-musl"
-
+            release_name: ppc64le
           - arch: riscv64
             qbt-musl-cross-make: "riscv64-linux-musl"
-
+            release_name: riscv64
           - arch: s390x
             qbt-musl-cross-make: "s390x-linux-musl"
+            release_name: s390x
 
     name: ${{ matrix.name }} ${{ matrix.os_id }}:${{ matrix.os_version_id }} ${{ matrix.arch }}
 
@@ -102,7 +102,7 @@ jobs:
         run: docker exec multiarch /bin/bash /root/crossbuild.sh ${{ inputs.source_repo }} ${{ inputs.source_branch }} ${{ matrix.qbt-musl-cross-make }} ${{ matrix.arch }}
 
       - name: Rename ${{ matrix.name }} to ${{ matrix.name }}-${{ matrix.arch }}
-        run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.arch }}
+        run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.release_name }}
 
       - name: Create path to binary env
         run: echo "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.arch }}" >> $GITHUB_ENV
