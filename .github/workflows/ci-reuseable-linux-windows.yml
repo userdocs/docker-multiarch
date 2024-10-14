@@ -67,7 +67,6 @@ env:
 
 jobs:
   get-inputs:
-    name: Get Environment vars
     runs-on: ubuntu-latest
     outputs:
       source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
