@@ -28,6 +28,16 @@ on:
         default: "1"
         type: choice
         options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      linux:
+        description: "Run Linux build"
+        type: boolean
+        required: true
+        default: true
+      windows:
+        description: "Run Windows build"
+        type: boolean
+        required: true
+        default: true
 
 permissions:
   actions: write
@@ -40,6 +50,7 @@ env:
 
 jobs:
   Linux:
+    if: ${{ github.event.inputs.linux == 'true' }}
     uses: ./.github/workflows/alpine_multi.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -50,6 +61,7 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   Windows:
+    if: ${{ github.event.inputs.windows == 'true' }}
     uses: ./.github/workflows/cygwin_cmd.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
