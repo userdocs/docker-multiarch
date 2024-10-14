@@ -39,17 +39,17 @@ jobs:
   Linux:
     uses: ./.github/workflows/alpine_multi.yml
     with:
-      source_repo: "${{ inputs.source_repo }}"
-      source_branch: "${{ inputs.source_branch }}"
-      artifacts_only: "${{ inputs.artifacts_only }}"
-      skip_rerun: "${{ inputs.skip_rerun }}"
-      retries: "${{ inputs.retries }}"
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
+      skip_rerun: ${{ inputs.skip_rerun }}
+      retries: ${{ inputs.retries }}
 
   Windows:
     uses: ./.github/workflows/cygwin_cmd.yml
     with:
-      source_repo: "${{ inputs.source_repo }}"
-      source_branch: "${{ inputs.source_branch }}"
-      artifacts_only: "${{ inputs.artifacts_only }}"
-      skip_rerun: "${{ inputs.skip_rerun }}"
-      retries: "${{ inputs.retries }}"
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
+      skip_rerun: ${{ inputs.skip_rerun }}
+      retries: ${{ inputs.retries }}
