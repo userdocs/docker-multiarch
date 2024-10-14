@@ -65,6 +65,7 @@ jobs:
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
 
   test:
+    needs: [Check-for-new-iperf3-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Test
