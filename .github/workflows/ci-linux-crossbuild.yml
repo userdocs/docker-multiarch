@@ -101,17 +101,8 @@ jobs:
       - name: mkdir -p /root/local
         run: docker exec multiarch /bin/bash /root/crossbuild.sh ${{ inputs.source_repo }} ${{ inputs.source_branch }} ${{ matrix.qbt-musl-cross-make }}
 
-      - name: Configure ${{ matrix.name }}
-        run: docker exec -w /root/${{ matrix.name }} multiarch ./configure --disable-shared --with-openssl=/usr --enable-static-bin --prefix=/root
-
-      - name: Make Build ${{ matrix.name }}
-        run: docker exec -w /root/${{ matrix.name }} multiarch make -j$(nproc)
-
-      - name: Make Install Build ${{ matrix.name }}
-        run: docker exec -w /root/${{ matrix.name }} multiarch make install
-
       - name: Rename ${{ matrix.name }} to ${{ matrix.name }}-${{ matrix.arch }}
-        run: docker exec multiarch mv -f /root/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.arch }}
+        run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.arch }}
 
       - name: Create path to binary env
         run: echo "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.arch }}" >> $GITHUB_ENV
