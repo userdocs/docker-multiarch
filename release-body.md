@@ -1,29 +1,28 @@
-## software provenance
+## Software provenance
 
-These release assets can be transparently verified to verify their provenance.
+> [!NOTE]
+> These release assets were transparently built for easy verification of their provenance.
 
-Using Github actions and workflows, the binaries are verified using Github attestation and VirusTotal scanning at build time so that you can be certain the release assets you are using were transparently built from the source code.
+Using GitHub actions and workflows, binaries are verified using GitHub attestation and VirusTotal scanning, at build time, so that you can be certain the release assets you are using were transparently built from the source code.
 
-## Github artifact-attestations
+- GitHub attestation will show where when and how the binary was built - [example](https://github.com/userdocs/iperf3-static/attestations/2474371)
+- VirusTotal scanning will show the binary is malware free before release - [example](https://www.virustotal.com/gui/file/42647b55aae08c3b581e78e1a6bcadf2c7715d4edfc2c842ecbb194b0b47b084)
+
+> [!TIP]
+> The sha256sum of the GitHub attestations and VirusTotal scan should be the same for any release assets.
+
+## GitHub artifact-attestations
 
 <details closed>
 <summary>Expand for details</summary>
 
 Binaries built from the release of `3.17.1+` use [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance) - [Github Docs](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds#verifying-artifact-attestations-with-the-github-cli)
 
-For example:, using `gh` cli - [manual](https://cli.github.com/manual/gh_attestation_verify)
+For example: using `gh` cli - [manual](https://cli.github.com/manual/gh_attestation_verify)
 
 ```bash
 gh attestation verify iperf3-amd64 -o userdocs
 ```
-
-> [!NOTE]
-> For the windows builds the `zip`, `iperf3.exe` and `cygwin1.dll` are verified.
->
-> For Linux builds the main static binary is verified.
-
-> [!TIP]
-> The sha256sum of the Github attestations and VirusTotal will be the same.
 
 </details>
 
@@ -32,11 +31,13 @@ gh attestation verify iperf3-amd64 -o userdocs
 <details closed>
 <summary>Expand for details</summary>
 
+Links to scan results
+
 [iperf3-amd64](https://www.virustotal.com/gui/file/84f9851d0647d3d618c66d64cac10ed1eb37583b3aaf3bb0baac88bf446fb10a)
 
-[iperf3-amd64-openssl-win](https://www.virustotal.com/gui/file/cafe0a01c5e0c643146433f584acb71571e580e79b2cffd6431ec83a0dacc8ab)
+[iperf3-amd64-openssl-win]()
 
-[iperf3-amd64-win](https://www.virustotal.com/gui/file/2292e9df7fc1c45fde8dcc3a0a3f90cc28263684eb818bb73323efe9595c9c74)
+[iperf3-amd64-win]()
 
 [iperf3-arm32v6](https://www.virustotal.com/gui/file/b36b7535bf7556aa3db2066d0d109bdb31d36a9133ca0439b05eee517bd2da5f)
 
