@@ -12,7 +12,7 @@ on:
       skip_new_tag_check:
         description: "Skip new tag check?"
         required: true
-        default: true
+        default: false
         type: boolean
       linux_build_type:
         description: "Build iperf3 using qemu emulation"
