@@ -54,6 +54,17 @@ env:
   GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
+  Check-for-new-iperf3-tag:
+    if: ${{ github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true' }}
+    uses: ./.github/workflows/ci-linux-emulation.yml
+    secrets:
+      vt_api_key: ${{ secrets.VT_API_KEY }}
+      GH_TOKEN: ${{ github.token }}
+    with:
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
+
   Linux-Emulation:
     if: ${{ github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true' }}
     uses: ./.github/workflows/ci-linux-emulation.yml
@@ -77,7 +88,7 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   Docker:
-    if: ${{ github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' }}
+    if: always() && (needs.job1.result == 'success' || needs.job2.result == 'success') && ${{ github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' }}
     needs: [Linux-Emulation, Linux-Crossbuild]
     uses: ./.github/workflows/ci-docker.yml
 
@@ -93,7 +104,14 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   rerun-on-failure:
-    needs: [Linux-Emulation, Linux-Crossbuild, Docker, Windows]
+    needs:
+      [
+        Check-for-new-iperf3-tag,
+        Linux-Emulation,
+        Linux-Crossbuild,
+        Docker,
+        Windows,
+      ]
     if: failure() && inputs.skip_rerun == '0'
     name: rerun-on-failure
     runs-on: ubuntu-latest
