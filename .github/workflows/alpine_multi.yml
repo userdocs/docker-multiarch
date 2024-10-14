@@ -1,6 +1,7 @@
 name: Build iperf3 multi static via alpine
 
 on:
+  workflow_call:
   workflow_dispatch:
     inputs:
       source_repo:

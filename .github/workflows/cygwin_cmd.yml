@@ -1,6 +1,7 @@
 name: Build iperf3 x64 static via cygwin-cmd
 
 on:
+  workflow_call:
   workflow_dispatch:
     inputs:
       source_repo:
