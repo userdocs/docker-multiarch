@@ -81,7 +81,7 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   Docker:
-    if: always() && (needs.job1.result == 'success' || needs.job2.result == 'success') && ${{ github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' }}
+    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ${{ github.event.inputs.linux == 'true' && github.event.inputs.artifacts_only == 'false' }}
     needs: [Linux-Emulation, Linux-Crossbuild]
     uses: ./.github/workflows/ci-docker.yml
 
