@@ -54,7 +54,7 @@ on:
         type: choice
         options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
   schedule:
-    - cron: "*/05 * * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   actions: write
@@ -70,6 +70,10 @@ jobs:
   Check-for-new-iperf3-tag:
     if: github.event.inputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
+    with:
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      force_build: ${{ inputs.force_build }}
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
