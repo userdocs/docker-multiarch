@@ -1,5 +1,5 @@
 # .github/workflows/dev-linux-windows.yml
-name: Dev Linux and Windows
+name: ci - reusable
 
 on:
   workflow_dispatch:
