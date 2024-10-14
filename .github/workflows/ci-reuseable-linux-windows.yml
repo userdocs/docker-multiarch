@@ -80,6 +80,8 @@ jobs:
       windows: ${{ !contains(inputs.windows, 'false') }}
       skip_rerun: ${{ !contains(inputs.skip_rerun, 'false') }}
       retries: ${{ inputs.retries || '1' }}
+    steps:
+      - run: echo "Getting inputs"
 
   Check-for-new-iperf3-tag:
     needs: get-inputs
