@@ -19,16 +19,6 @@ on:
         type: number
         required: true
 
-permissions:
-  actions: write
-  id-token: write
-  contents: write
-  attestations: write
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
 

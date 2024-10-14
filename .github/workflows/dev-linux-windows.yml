@@ -29,6 +29,12 @@ on:
         type: choice
         options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
+permissions:
+  actions: write
+  id-token: write
+  contents: write
+  attestations: write
+
 jobs:
   Linux:
     uses: ./.github/workflows/alpine_multi.yml
