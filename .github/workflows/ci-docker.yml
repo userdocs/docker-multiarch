@@ -1,11 +1,7 @@
 name: CI - Linux Docker build
 
 on:
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  packages: write
+  workflow_call:
 
 env:
   REGISTRY_IMAGE_GHCR: ghcr.io/${{ github.repository }}

@@ -197,26 +197,3 @@ jobs:
           allowUpdates: true
           bodyFile: release-body.md
           token: ${{ github.token }}
-
-  docker:
-    runs-on: ubuntu-latest
-    if: inputs.artifacts_only == '0' && always() && contains(needs.*.result, 'success') && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-    name: Docker build and push
-    needs: [build, release]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: gh cli trigger and watch local workflow
-        if: inputs.artifacts_only == '0'
-        run: |
-          workflow_run_id=""
-          workflow_run_name="docker.yml"
-
-          gh workflow run "${workflow_run_name}"
-
-          while [[ -z "$workflow_run_id" ]]; do
-            workflow_run_id=$(gh run list -w "${workflow_run_name}" -s "in_progress" -L 1 --json databaseId -q '.[].databaseId')
-          done
-
-          gh run watch "${workflow_run_id}" -i 5 --exit-status

@@ -1,4 +1,4 @@
-name: Check for new iperf3 release tag
+name: CI - Check for new iperf3 release tag
 
 on:
   workflow_dispatch:
