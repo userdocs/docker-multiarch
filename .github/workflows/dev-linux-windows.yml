@@ -37,33 +37,23 @@ permissions:
 
 jobs:
   Linux:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Call Reusable Workflow
-        uses: ./.github/workflows/alpine_multi.yml
-        with:
-          vt_api_key: ${{ secrets.VT_API_KEY }}
-          source_repo: ${{ inputs.source_repo }}
-          source_branch: ${{ inputs.source_branch }}
-          artifacts_only: ${{ inputs.artifacts_only }}
-          skip_rerun: ${{ inputs.skip_rerun }}
-          retries: ${{ inputs.retries }}
+    uses: ./.github/workflows/alpine_multi.yml
+    secrets:
+      vt_api_key: ${{ secrets.VT_API_KEY }}
+    with:
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
+      skip_rerun: ${{ inputs.skip_rerun }}
+      retries: ${{ inputs.retries }}
 
   Windows:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Call Reusable Workflow
-        uses: ./.github/workflows/cygwin_cmd.yml
-        with:
-          vt_api_key: ${{ secrets.VT_API_KEY }}
-          source_repo: ${{ inputs.source_repo }}
-          source_branch: ${{ inputs.source_branch }}
-          artifacts_only: ${{ inputs.artifacts_only }}
-          skip_rerun: ${{ inputs.skip_rerun }}
-          retries: ${{ inputs.retries }}
+    uses: ./.github/workflows/cygwin_cmd.yml
+    secrets:
+      vt_api_key: ${{ secrets.VT_API_KEY }}
+    with:
+      source_repo: ${{ inputs.source_repo }}
+      source_branch: ${{ inputs.source_branch }}
+      artifacts_only: ${{ inputs.artifacts_only }}
+      skip_rerun: ${{ inputs.skip_rerun }}
+      retries: ${{ inputs.retries }}
