@@ -64,21 +64,31 @@ permissions:
 
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
+  source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+  source_branch: ${{ inputs.source_branch || 'master' }}
+  skip_new_tag_check: ${{ contains(inputs.skip_new_tag_check, 'true') }}
+  force_build: ${{ contains(inputs.force_build, 'true') }}
+  linux_build_type: ${{ !contains(inputs.linux_build_type, 'false') }}
+  artifacts_only: ${{ contains(inputs.artifacts_only, 'true') }}
+  linux: ${{ !contains(inputs.linux, 'false') }}
+  windows: ${{ !contains(inputs.windows, 'false') }}
+  skip_rerun: ${{ !contains(inputs.skip_rerun, 'false') }}
+  retries: ${{ inputs.retries || '1' }}
 
 jobs:
   get-inputs:
     runs-on: ubuntu-latest
     outputs:
-      source_repo: ${{ inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
-      source_branch: ${{ inputs.source_branch || 'master' }}
-      skip_new_tag_check: ${{ contains(inputs.skip_new_tag_check, 'true') }}
-      force_build: ${{ contains(inputs.force_build, 'true') }}
-      linux_build_type: ${{ !contains(inputs.linux_build_type, 'false') }}
-      artifacts_only: ${{ contains(inputs.artifacts_only, 'true') }}
-      linux: ${{ !contains(inputs.linux, 'false') }}
-      windows: ${{ !contains(inputs.windows, 'false') }}
-      skip_rerun: ${{ !contains(inputs.skip_rerun, 'false') }}
-      retries: ${{ inputs.retries || '1' }}
+      source_repo: ${{ env.source_repo }}
+      source_branch: ${{ env.source_repo }}
+      skip_new_tag_check: ${{ env.source_repo }}
+      force_build: ${{ env.source_repo }}
+      linux_build_type: ${{ env.source_repo }}
+      artifacts_only: ${{ env.source_repo }}
+      linux: ${{ env.source_repo }}
+      windows: ${{ env.source_repo }}
+      skip_rerun: ${{ env.source_repo }}
+      retries: ${{ env.source_repo }}
     steps:
       - run: echo "Getting inputs"
 
