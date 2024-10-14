@@ -74,7 +74,6 @@ jobs:
   rerun-on-failure:
     if: failure() && inputs.skip_rerun == '0'
     name: rerun-on-failure
-    needs: [Linux, Windows]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
