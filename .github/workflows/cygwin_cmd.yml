@@ -5,6 +5,8 @@ on:
     secrets:
       vt_api_key:
         required: true
+      GH_TOKEN:
+        required: true
     inputs:
       source_repo:
         type: string
@@ -14,12 +16,6 @@ on:
         required: true
       artifacts_only:
         type: boolean
-        required: true
-      skip_rerun:
-        type: boolean
-        required: true
-      retries:
-        type: string
         required: true
 
 env:
@@ -162,19 +158,3 @@ jobs:
           allowUpdates: true
           bodyFile: release-body.md
           token: ${{ github.token }}
-
-  rerun-on-failure:
-    if: failure() && inputs.skip_rerun == '0'
-    name: rerun-on-failure
-    needs: [build, release]
-    permissions:
-      actions: write
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: "${{ github.TOKEN }}"
-    steps:
-      - uses: actions/checkout@v4
-      - name: Trigger rerun workflow on job failures
-        run: |
-          inputs_retries="${{ inputs.retries }}"
-          gh workflow run rerun.yml -f run_id=${{ github.run_id }} -f attempts=${{ github.run_attempt }} -f retries=${inputs_retries:-1}
