@@ -74,7 +74,7 @@ jobs:
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
-    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'true'
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  github.event.inputs.linux == 'false' && github.event.inputs.linux_build_type == 'true'
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
@@ -86,7 +86,7 @@ jobs:
 
   Linux-Crossbuild:
     needs: Check-for-new-iperf3-tag
-    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'true' && github.event.inputs.linux_build_type == 'false'
+    if: always() && needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'false' && github.event.inputs.linux_build_type == 'false'
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets:
       vt_api_key: ${{ secrets.VT_API_KEY }}
