@@ -74,7 +74,6 @@ env:
   windows: ${{ !contains(inputs.windows, 'false') }}
   skip_rerun: ${{ !contains(inputs.skip_rerun, 'false') }}
   retries: ${{ inputs.retries || '1' }}
-
   GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
