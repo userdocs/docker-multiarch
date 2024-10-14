@@ -1,4 +1,4 @@
-name: Windows - build - iperf3 x86_64 static binaries
+name: CI - Windows build
 
 on:
   workflow_call:

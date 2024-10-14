@@ -1,4 +1,4 @@
-name: Linux - build - iperf3 static Alpine multiarch
+name: CI - Linux binary build
 
 on:
   workflow_call:
