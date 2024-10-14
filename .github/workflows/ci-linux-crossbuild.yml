@@ -101,11 +101,11 @@ jobs:
       - name: mkdir -p /root/local
         run: docker exec multiarch /bin/bash /root/crossbuild.sh ${{ inputs.source_repo }} ${{ inputs.source_branch }} ${{ matrix.qbt-musl-cross-make }} ${{ matrix.arch }}
 
-      - name: Rename ${{ matrix.name }} to ${{ matrix.name }}-${{ matrix.arch }}
+      - name: Rename ${{ matrix.name }} to ${{ matrix.name }}-${{ matrix.release_name }}
         run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.release_name }}
 
       - name: Create path to binary env
-        run: echo "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.arch }}" >> $GITHUB_ENV
+        run: echo "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.release_name }}" >> $GITHUB_ENV
 
       - name: VirusTotal Scan
         id: virustotal
@@ -116,8 +116,8 @@ jobs:
 
       - name: sha256sum ${{ github.event.inputs.distinct_id }}
         run: |
-          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}.url
-          cat ${{ matrix.name }}-${{ matrix.arch }}.url
+          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.release_name }}.url
+          cat ${{ matrix.name }}-${{ matrix.release_name }}.url
 
       - name: Create tag env
         run: echo "release_tag=$(sed -rn 's|(.*)\[(.*)],\[https://github.com/esnet/iperf],(.*)|\2|p' ${{ matrix.name }}/configure.ac)" >> $GITHUB_ENV
@@ -134,10 +134,10 @@ jobs:
       - name: "Create artifact"
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.name }}-${{ matrix.arch }} ${{ env.release_tag }}
+          name: ${{ matrix.name }}-${{ matrix.release_name }} ${{ env.release_tag }}
           path: |
             ${{ env.binary_path }}
-            ${{ matrix.name }}-${{ matrix.arch }}.url
+            ${{ matrix.name }}-${{ matrix.release_name }}.url
 
   release:
     runs-on: ubuntu-latest
