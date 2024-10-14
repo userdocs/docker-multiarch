@@ -69,7 +69,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: echo ${{ needs.Check-for-new-iperf3-tag.outputs.should_skip }}"
+        run: |
+          echo "test: ${{ needs.Check-for-new-iperf3-tag.outputs.should_skip }}"
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
