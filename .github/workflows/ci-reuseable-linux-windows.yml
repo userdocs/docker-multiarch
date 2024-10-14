@@ -93,7 +93,7 @@ jobs:
       artifacts_only: ${{ inputs.artifacts_only }}
 
   rerun-on-failure:
-    needs: [Linux, Docker, Windows]
+    needs: [Linux-Emulation, Linux-Crossbuild, Docker, Windows]
     if: failure() && inputs.skip_rerun == '0'
     name: rerun-on-failure
     runs-on: ubuntu-latest
