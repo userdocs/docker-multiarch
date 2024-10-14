@@ -15,7 +15,7 @@ on:
       artifacts_only:
         description: "No release - artifacts only"
         required: true
-        default: false
+        default: true
         type: boolean
       skip_rerun:
         description: "Skip rerun?"
@@ -37,19 +37,33 @@ permissions:
 
 jobs:
   Linux:
-    uses: ./.github/workflows/alpine_multi.yml
-    with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
-      skip_rerun: ${{ inputs.skip_rerun }}
-      retries: ${{ inputs.retries }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Call Reusable Workflow
+        uses: ./.github/workflows/alpine_multi.yml
+        with:
+          vt_api_key: ${{ secrets.VT_API_KEY }}
+          source_repo: ${{ inputs.source_repo }}
+          source_branch: ${{ inputs.source_branch }}
+          artifacts_only: ${{ inputs.artifacts_only }}
+          skip_rerun: ${{ inputs.skip_rerun }}
+          retries: ${{ inputs.retries }}
 
   Windows:
-    uses: ./.github/workflows/cygwin_cmd.yml
-    with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
-      skip_rerun: ${{ inputs.skip_rerun }}
-      retries: ${{ inputs.retries }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Call Reusable Workflow
+        uses: ./.github/workflows/cygwin_cmd.yml
+        with:
+          vt_api_key: ${{ secrets.VT_API_KEY }}
+          source_repo: ${{ inputs.source_repo }}
+          source_branch: ${{ inputs.source_branch }}
+          artifacts_only: ${{ inputs.artifacts_only }}
+          skip_rerun: ${{ inputs.skip_rerun }}
+          retries: ${{ inputs.retries }}
