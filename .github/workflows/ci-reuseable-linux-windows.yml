@@ -12,7 +12,7 @@ on:
         required: true
         default: "master"
       skip_new_tag_check:
-        description: "Bypass new `tag` check and force build?"
+        description: "Bypass new tag check and force build?"
         required: true
         default: false
         type: boolean
