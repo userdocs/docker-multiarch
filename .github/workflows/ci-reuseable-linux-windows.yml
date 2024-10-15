@@ -93,7 +93,7 @@ jobs:
       force_build: ${{ needs.Scheduled-Defaults.outputs.force_build == 'false' }}
 
   Linux-Emulation:
-    needs: Iperf3-Tag
+    needs: [Scheduled-Defaults, Iperf3-Tag]
     if: always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' &&  needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'true'
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
@@ -103,7 +103,7 @@ jobs:
       artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Linux-Crossbuild:
-    needs: Iperf3-Tag
+    needs: [Scheduled-Defaults, Iperf3-Tag]
     if: always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' && needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'false'
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
