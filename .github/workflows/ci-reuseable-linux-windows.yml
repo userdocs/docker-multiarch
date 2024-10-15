@@ -85,7 +85,7 @@ jobs:
         run: echo "hi"
 
   Iperf3-Tag:
-    needs: Set-Ouput
+    needs: Scheduled-Defaults
     if: needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
