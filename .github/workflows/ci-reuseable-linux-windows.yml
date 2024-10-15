@@ -79,8 +79,8 @@ jobs:
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
-      source_repo: ${{ github.event.source_repo }}
-      source_branch: ${{ github.event.source_branch }}
+      source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.source_branch || 'master' }}
       artifacts_only: ${{ github.event.artifacts_only }}
 
   Linux-Crossbuild:
@@ -89,8 +89,8 @@ jobs:
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
-      source_repo: ${{ github.event.source_repo }}
-      source_branch: ${{ github.event.source_branch }}
+      source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.source_branch || 'master' }}
       artifacts_only: ${{ github.event.artifacts_only }}
 
   Docker:
@@ -105,8 +105,8 @@ jobs:
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
-      source_repo: ${{ github.event.source_repo }}
-      source_branch: ${{ github.event.source_branch }}
+      source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.source_branch || 'master' }}
       artifacts_only: ${{ github.event.artifacts_only }}
 
   rerun-on-failure:
