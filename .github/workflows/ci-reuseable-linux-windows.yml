@@ -70,12 +70,9 @@ jobs:
   Scheduled-Defaults:
     runs-on: ubuntu-latest
     outputs:
-      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
-      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
       skip_new_tag_check: ${{ contains('github.event.inputs.skip_new_tag_check', 'true')  }}
       force_build: ${{ contains('github.event.inputs.force_build', 'true') }}
       linux_build_type: ${{ contains('github.event.inputs.linux_build_type', 'true') }}
-      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
       linux: ${{ contains('github.event.inputs.linux', 'true') }}
       windows: ${{ contains('github.event.inputs.windows', 'true') }}
       skip_rerun: ${{ contains('github.event.inputs.skip_rerun', 'true') }}
@@ -98,9 +95,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
+      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
 
   Linux-Crossbuild:
     needs: [Scheduled-Defaults, Iperf3-Tag]
@@ -108,9 +105,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
+      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
 
   Docker:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild]
@@ -124,9 +121,9 @@ jobs:
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
+      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
