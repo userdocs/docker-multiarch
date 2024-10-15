@@ -80,8 +80,7 @@ jobs:
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Set output
-        run: |
-          echo ${{ }}
+        run: echo "Setting output"
 
   test-outputs:
     needs: Scheduled-Defaults
