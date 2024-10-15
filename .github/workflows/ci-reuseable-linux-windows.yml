@@ -72,6 +72,8 @@ jobs:
     outputs:
       skip_new_tag_check: ${{ contains('github.event.inputs.skip_new_tag_check', 'true')  }}
       force_build: ${{ contains('github.event.inputs.force_build', 'true') }}
+      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
       artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
       linux_build_type: ${{ contains('github.event.inputs.linux_build_type', 'true') }}
       linux: ${{ contains('github.event.inputs.linux', 'true') }}
@@ -88,14 +90,16 @@ jobs:
     steps:
       - name: Set output
         run: |
-          echo "skip_new_tag_check: {{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}"
-          echo "force_build: {{ needs.Scheduled-Defaults.outputs.force_build }}"
-          echo "linux_build_type: {{ needs.Scheduled-Defaults.outputs.linux_build_type }}"
+          echo "skip_new_tag_check: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}"
+          echo "force_build: ${{ needs.Scheduled-Defaults.outputs.force_build }}"
+          echo "linux_build_type: ${{ needs.Scheduled-Defaults.outputs.linux_build_type }}"
           echo "linux: {{ needs.Scheduled-Defaults.outputs.linux }}"
-          echo "windows: {{ needs.Scheduled-Defaults.outputs.windows }}"
-          echo "skip_rerun: {{ needs.Scheduled-Defaults.outputs.skip_rerun }}"
-          echo "retries: {{ needs.Scheduled-Defaults.outputs.retries }}"
-          echo "artifacts_only: {{ needs.Scheduled-Defaults.outputs.artifacts_only }}"
+          echo "windows: ${{ needs.Scheduled-Defaults.outputs.windows }}"
+          echo "skip_rerun: ${{ needs.Scheduled-Defaults.outputs.skip_rerun }}"
+          echo "retries: ${{ needs.Scheduled-Defaults.outputs.retries }}"
+          echo "artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}"
+          echo "source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}"
+          echo "source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}"
 
   Iperf3-Tag:
     needs: Scheduled-Defaults
