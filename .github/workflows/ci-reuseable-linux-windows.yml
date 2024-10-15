@@ -70,15 +70,15 @@ jobs:
   Scheduled-Defaults:
     runs-on: ubuntu-latest
     outputs:
-      skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'false'  }}
-      force_build: ${{ contains('github.event.inputs.force_build', 'true') }}
       source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.inputs.source_branch || 'master' }}
-      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
-      linux_build_type: ${{ contains('github.event.inputs.linux_build_type', 'true') }}
-      linux: ${{ contains('github.event.inputs.linux', 'true') }}
-      windows: ${{ contains('github.event.inputs.windows', 'true') }}
-      skip_rerun: ${{ contains('github.event.inputs.skip_rerun', 'true') }}
+      skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'false'  }}
+      force_build: ${{ github.event.inputs.force_build || 'false' }}
+      artifacts_only: ${{ github.event.inputs.artifacts_only || 'false' }}
+      linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
+      linux: ${{ github.event.inputs.linux || 'false' }}
+      windows: ${{ github.event.inputs.windows || 'false' }}
+      skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Set output
