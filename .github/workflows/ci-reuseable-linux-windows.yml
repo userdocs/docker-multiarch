@@ -83,11 +83,11 @@ jobs:
       source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.inputs.source_branch || 'master' }}
       artifacts_only: ${{ github.event.inputs.artifacts_only || 'false' }}
-      skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'true'  }}
+      skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'false'  }}
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
       linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'false' }}
-      skip_rerun: ${{ github.event.inputs.skip_rerun || 'true' }}
+      skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Set output
