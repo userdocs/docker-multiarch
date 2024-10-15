@@ -130,12 +130,12 @@ jobs:
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
-    if: always() && failure() && github.event.inputs.skip_rerun == 'false'
+    if: always() && failure() && needs.Scheduled-Defaults.outputs.skip_rerun == 'false'
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Trigger rerun workflow on job failures
         run: |
-          inputs_retries="${{ inputs.retries }}"
+          inputs_retries="${{ needs.Scheduled-Defaults.outputs.retries }}"
           gh workflow run rerun.yml -f run_id=${{ github.run_id }} -f attempts=${{ github.run_attempt }} -f retries=${inputs_retries:-1}
