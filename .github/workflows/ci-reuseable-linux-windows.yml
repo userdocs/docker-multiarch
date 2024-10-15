@@ -1,8 +1,8 @@
 name: ci - main reusable caller
 
 on:
-  # schedule:
-  #   - cron: "*/15 * * * *" # Run every 5 minutes
+  schedule:
+    - cron: "*/15 * * * *" # Run every 5 minutes
   workflow_dispatch:
     inputs:
       source_repo:
@@ -67,11 +67,11 @@ env:
 
 jobs:
   Check-for-new-iperf3-tag:
-    if: github.event.inputs.skip_new_tag_check == 'false'
+    if: github.event.inputs.skip_new_tag_check == 'false' || contains('inputs.skip_new_tag_check', 'true')
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
-      force_build: ${{ inputs.force_build == 'false' }}
+      force_build: ${{ github.event.force_build == 'false || contains('inputs.force_build', 'true')' }}
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
@@ -79,9 +79,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ github.event.source_repo }}
+      source_branch: ${{ github.event.source_branch }}
+      artifacts_only: ${{ github.event.artifacts_only }}
 
   Linux-Crossbuild:
     needs: Check-for-new-iperf3-tag
@@ -89,9 +89,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ github.event.source_repo }}
+      source_branch: ${{ github.event.source_branch }}
+      artifacts_only: ${{ github.event.artifacts_only }}
 
   Docker:
     needs: [Check-for-new-iperf3-tag, Linux-Emulation, Linux-Crossbuild]
@@ -105,9 +105,9 @@ jobs:
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ github.event.source_repo }}
+      source_branch: ${{ github.event.source_branch }}
+      artifacts_only: ${{ github.event.artifacts_only }}
 
   rerun-on-failure:
     needs:
@@ -125,5 +125,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Trigger rerun workflow on job failures
         run: |
-          inputs_retries="${{ inputs.retries }}"
+          inputs_retries="${{ github.event.retries }}"
           gh workflow run rerun.yml -f run_id=${{ github.run_id }} -f attempts=${{ github.run_attempt }} -f retries=${inputs_retries:-1}
