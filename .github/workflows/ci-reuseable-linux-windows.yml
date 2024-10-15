@@ -70,7 +70,7 @@ jobs:
   Scheduled-Defaults:
     runs-on: ubuntu-latest
     outputs:
-      skip_new_tag_check: ${{ contains('github.event.inputs.skip_new_tag_check', 'true')  }}
+      skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'false'  }}
       force_build: ${{ contains('github.event.inputs.force_build', 'true') }}
       source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.inputs.source_branch || 'master' }}
