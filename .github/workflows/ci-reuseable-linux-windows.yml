@@ -124,9 +124,9 @@ jobs:
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
