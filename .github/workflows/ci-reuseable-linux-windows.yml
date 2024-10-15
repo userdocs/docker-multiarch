@@ -81,7 +81,7 @@ jobs:
     with:
       source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.source_branch || 'master' }}
-      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true')' }}
+      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true') }}
 
   Linux-Crossbuild:
     needs: Check-for-new-iperf3-tag
@@ -91,7 +91,7 @@ jobs:
     with:
       source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.source_branch || 'master' }}
-      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true')' }}
+      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true') }}
 
   Docker:
     needs: [Check-for-new-iperf3-tag, Linux-Emulation, Linux-Crossbuild]
@@ -107,7 +107,7 @@ jobs:
     with:
       source_repo: ${{ github.event.source_repo || 'https://github.com/esnet/iperf.git' }}
       source_branch: ${{ github.event.source_branch || 'master' }}
-      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true')' }}
+      artifacts_only: ${{ github.event.artifacts_only || contains('github.event.inputs.artifacts_only', 'true') }}
 
   rerun-on-failure:
     needs:
