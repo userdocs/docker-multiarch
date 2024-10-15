@@ -93,7 +93,7 @@ jobs:
           echo "skip_new_tag_check: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}"
           echo "force_build: ${{ needs.Scheduled-Defaults.outputs.force_build }}"
           echo "linux_build_type: ${{ needs.Scheduled-Defaults.outputs.linux_build_type }}"
-          echo "linux: {{ needs.Scheduled-Defaults.outputs.linux }}"
+          echo "linux: ${{ needs.Scheduled-Defaults.outputs.linux }}"
           echo "windows: ${{ needs.Scheduled-Defaults.outputs.windows }}"
           echo "skip_rerun: ${{ needs.Scheduled-Defaults.outputs.skip_rerun }}"
           echo "retries: ${{ needs.Scheduled-Defaults.outputs.retries }}"
