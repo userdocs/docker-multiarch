@@ -104,11 +104,11 @@ jobs:
 
   Iperf3-Tag:
     needs: Scheduled-Defaults
-    if: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false' }}
+    if: needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
-      force_build: needs.Scheduled-Defaults.outputs.force_build == 'false'
+      force_build: ${{ needs.Scheduled-Defaults.outputs.force_build == 'false' }}
 
   Linux-Emulation:
     needs: [Scheduled-Defaults, Iperf3-Tag]
