@@ -67,11 +67,11 @@ env:
 
 jobs:
   Check-for-new-iperf3-tag:
-    if: github.event.inputs.skip_new_tag_check == 'false' || contains('github.event.inputs.skip_new_tag_check', 'true')
+    if: ( github.event.inputs.skip_new_tag_check == 'false' || contains('github.event.inputs.skip_new_tag_check', 'true') )
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
-      force_build: ${{ github.event.force_build == 'false' || contains('github.event.inputs.force_build', 'true') }}
+      force_build: ( github.event.force_build == 'false' || contains('github.event.inputs.force_build', 'true') )
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
@@ -101,7 +101,7 @@ jobs:
 
   Windows:
     needs: [Check-for-new-iperf3-tag]
-    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && github.event.inputs.windows == 'false'
+    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && ( github.event.inputs.windows == 'false' || contains('github.event.inputs.force_build', 'true') )
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
@@ -118,7 +118,7 @@ jobs:
         Docker,
         Windows,
       ]
-    if: always() && failure() && ${{ github.event.inputs.skip_rerun == 'false' || contains('inputs.skip_rerun', 'true') }}
+    if: always() && failure() && ( github.event.inputs.skip_rerun == 'false' || contains('inputs.skip_rerun', 'true') )
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
