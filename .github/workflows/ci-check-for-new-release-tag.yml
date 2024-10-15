@@ -10,21 +10,7 @@ env:
   GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
-  skip_duplicate_job:
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
-    steps:
-      - id: skip_check
-        uses: fkirc/skip-duplicate-actions@v5
-        with:
-          concurrent_skipping: "always"
-          cancel_others: "false"
-          skip_after_successful_duplicate: false
-          do_not_skip: ""
-
   check_release:
-    if: ${{ needs.skip_duplicate_job.outputs.should_skip != 'true' }}
     needs: skip_duplicate_job
     outputs:
       continue_build: ${{ steps.continue_build_check.outputs.continue_build_choice }}
