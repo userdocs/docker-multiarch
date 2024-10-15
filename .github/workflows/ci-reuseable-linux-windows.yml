@@ -93,7 +93,7 @@ jobs:
       - name: Set output
         run: |
           printf '%b\n' "# Input Settings Summary" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' ":octocat: Here is a summary of inputs reusable workflow" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' ":octocat: Here is a summary of input values set by our reusable workflow" >> $GITHUB_STEP_SUMMARY
 
           printf '\n%b\n' "source_repo: \`${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "source_branch: \`${{ github.event.inputs.source_branch || 'master' }}\`" >> $GITHUB_STEP_SUMMARY
@@ -113,7 +113,7 @@ jobs:
       - name: Set output
         run: |
           printf '%b\n' "# Scheduled Defaults Outputs Summary" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' ":octocat: Here is a summary of inputs reusable workflow" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' ":octocat: Here is a summary of inputs set as string outputs that are used in workflows." >> $GITHUB_STEP_SUMMARY
 
           printf '\n%b\n' "source_repo: \`${{ needs.Scheduled-Defaults.outputs.source_repo }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "source_branch: \`${{ needs.Scheduled-Defaults.outputs.source_branch }}\`" >> $GITHUB_STEP_SUMMARY
