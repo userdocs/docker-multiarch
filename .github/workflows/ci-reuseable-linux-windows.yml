@@ -101,7 +101,7 @@ jobs:
 
   Windows:
     needs: [Check-for-new-iperf3-tag]
-    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' && ( github.event.inputs.windows == 'false' || contains('github.event.inputs.force_build', 'true') )
+    if: needs.Check-for-new-iperf3-tag.outputs.continue_build == 'yes' &&  ${{  github.event.inputs.windows == 'false' || contains('github.event.inputs.force_build', 'true') }}
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
@@ -118,7 +118,7 @@ jobs:
         Docker,
         Windows,
       ]
-    if: always() && failure() && ( github.event.inputs.skip_rerun == 'false' || contains('inputs.skip_rerun', 'true') )
+    if: always() && failure() && ${{ github.event.inputs.skip_rerun == 'false' || contains('inputs.skip_rerun', 'true') }}
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
