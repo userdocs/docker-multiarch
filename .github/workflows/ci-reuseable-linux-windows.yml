@@ -90,7 +90,7 @@ jobs:
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
-      force_build: ${{ inputs.force_build == 'false' }}
+      force_build: ${{ needs.Scheduled-Defaults.outputs.force_build == 'false' }}
 
   Linux-Emulation:
     needs: Iperf3-Tag
@@ -98,9 +98,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Linux-Crossbuild:
     needs: Iperf3-Tag
@@ -108,13 +108,13 @@ jobs:
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
-      source_repo: ${{ inputs.source_repo }}
-      source_branch: ${{ inputs.source_branch }}
-      artifacts_only: ${{ inputs.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Docker:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild]
-    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' && github.event.inputs.linux == 'false' && github.event.inputs.artifacts_only == 'false' )
+    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' && needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' )
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
 
