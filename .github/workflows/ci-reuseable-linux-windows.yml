@@ -84,7 +84,7 @@ jobs:
       - name: Set output
         run: echo "Setting output"
 
-  test-outputs:
+  Show-Ouputs:
     needs: Scheduled-Defaults
     runs-on: ubuntu-latest
     steps:
