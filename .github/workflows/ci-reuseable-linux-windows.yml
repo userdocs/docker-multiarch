@@ -53,6 +53,9 @@ on:
         type: choice
         options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
+  schedule:
+    - cron: "*/5 * * * *" # every 5 minutes
+
 permissions:
   actions: write
   id-token: write
@@ -64,8 +67,26 @@ env:
   GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
+  Scheduled-Defaults:
+    runs-on: ubuntu-latest
+    outputs:
+      source_repo: ${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}
+      source_branch: ${{ github.event.inputs.source_branch || 'master' }}
+      skip_new_tag_check: ${{ contains('github.event.inputs.skip_new_tag_check', 'true')  }}
+      force_build: ${{ contains('github.event.inputs.force_build', 'true') }}
+      linux_build_type: ${{ contains('github.event.inputs.linux_build_type', 'true') }}
+      artifacts_only: ${{ contains('github.event.inputs.artifacts_only', 'true') }}
+      linux: ${{ contains('github.event.inputs.linux', 'true') }}
+      windows: ${{ contains('github.event.inputs.windows', 'true') }}
+      skip_rerun: ${{ contains('github.event.inputs.skip_rerun', 'true') }}
+      retries: ${{ github.event.inputs.retries || '1' }}
+    steps:
+      - name: Set output
+        run: echo "hi"
+
   Iperf3-Tag:
-    if: github.event.inputs.skip_new_tag_check == 'false'
+    needs: Set-Ouput
+    if: needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
