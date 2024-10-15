@@ -129,7 +129,7 @@ jobs:
 
   Windows:
     needs: [Iperf3-Tag]
-    if: ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && github.event.inputs.windows == 'false'
+    if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && github.event.inputs.windows == 'false'
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
