@@ -2,11 +2,7 @@ name: ci - linux binary cross build
 
 on:
   workflow_call:
-    secrets:
-      vt_api_key:
-        required: true
-      GH_TOKEN:
-        required: true
+    secrets: inherit
     inputs:
       source_repo:
         type: string
