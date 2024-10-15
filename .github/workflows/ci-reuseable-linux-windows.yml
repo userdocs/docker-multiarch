@@ -116,7 +116,7 @@ jobs:
         Docker,
         Windows,
       ]
-    if: always() && failure() && inputs.skip_rerun == 'false'
+    if: always() && failure() && github.event.inputs.skip_rerun == 'false'
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
