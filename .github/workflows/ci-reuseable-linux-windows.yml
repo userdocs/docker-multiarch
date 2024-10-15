@@ -1,8 +1,8 @@
 name: ci - main reusable caller
 
 on:
-  schedule:
-    - cron: "*/15 * * * *" # Run every 5 minutes
+  # schedule:
+  #   - cron: "*/15 * * * *" # Run every 5 minutes
   workflow_dispatch:
     inputs:
       source_repo:
