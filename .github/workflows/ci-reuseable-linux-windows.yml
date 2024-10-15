@@ -91,7 +91,29 @@ jobs:
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Set output
-        run: echo "Setting output"
+        run: |
+          printf '\n%b\n' "🟩 source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}"
+          printf '\n%b\n' "🟩 source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}"
+          printf '\n%b\n' "🟩 artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}"
+          printf '\n%b\n' "🟩 skip_new_tag_check: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}"
+          printf '\n%b\n' "🟩 linux_build_type: ${{ needs.Scheduled-Defaults.outputs.linux_build_type }}"
+          printf '\n%b\n' "🟩 linux: ${{ needs.Scheduled-Defaults.outputs.linux }}"
+          printf '\n%b\n' "🟩 windows: ${{ needs.Scheduled-Defaults.outputs.windows }}"
+          printf '\n%b\n' "🟩 skip_rerun: ${{ needs.Scheduled-Defaults.outputs.skip_rerun }}"
+          printf '\n%b\n' "🟩 retries: ${{ needs.Scheduled-Defaults.outputs.retries }}"
+
+          printf '%b\n' "# Scheduled Defaults Summary" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' ":octocat: Here is a summary of inputs reusable workflow" >> $GITHUB_STEP_SUMMARY
+
+          printf '\n%b\n' "🟩 source_repo: \`${{ needs.Scheduled-Defaults.outputs.source_repo }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 source_branch: \`${{ needs.Scheduled-Defaults.outputs.source_branch }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 artifacts_only: \`${{ needs.Scheduled-Defaults.outputs.artifacts_only }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 skip_new_tag_check: \`${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 linux_build_type: \`${{ needs.Scheduled-Defaults.outputs.linux_build_type }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 linux: \`${{ needs.Scheduled-Defaults.outputs.linux }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 windows: \`${{ needs.Scheduled-Defaults.outputs.windows }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 skip_rerun: \`${{ needs.Scheduled-Defaults.outputs.skip_rerun }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "🟩 retries: \`${{ needs.Scheduled-Defaults.outputs.retries }}\`" >> $GITHUB_STEP_SUMMARY
 
   Show-Ouputs:
     if: needs.skip_duplicate_job.outputs.should_skip != 'true'
