@@ -10,7 +10,7 @@ on:
         type: string
         required: true
       artifacts_only:
-        type: boolean
+        type: string
         required: true
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
