@@ -16,11 +16,6 @@ on:
         required: true
         default: false
         type: boolean
-      force_build:
-        description: "Force a build"
-        required: false
-        default: false
-        type: boolean
       linux_build_type:
         description: "Build iperf3 using qemu emulation"
         required: true
@@ -74,7 +69,6 @@ jobs:
       source_branch: ${{ github.event.inputs.source_branch || 'master' }}
       artifacts_only: ${{ github.event.inputs.artifacts_only || 'false' }}
       skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'false'  }}
-      force_build: ${{ github.event.inputs.force_build || 'false' }}
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
       linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'false' }}
@@ -95,7 +89,6 @@ jobs:
           echo "artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}"
           echo
           echo "skip_new_tag_check: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check }}"
-          echo "force_build: ${{ needs.Scheduled-Defaults.outputs.force_build }}"
           echo "linux_build_type: ${{ needs.Scheduled-Defaults.outputs.linux_build_type }}"
           echo "linux: ${{ needs.Scheduled-Defaults.outputs.linux }}"
           echo "windows: ${{ needs.Scheduled-Defaults.outputs.windows }}"
@@ -107,8 +100,6 @@ jobs:
     if: needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false'
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
-    with:
-      force_build: ${{ needs.Scheduled-Defaults.outputs.force_build == 'false' }}
 
   Linux-Emulation:
     needs: [Scheduled-Defaults, Iperf3-Tag]
