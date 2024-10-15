@@ -107,9 +107,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.output.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.output.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.output.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Linux-Crossbuild:
     needs: [Scheduled-Defaults, Iperf3-Tag]
@@ -117,9 +117,9 @@ jobs:
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.output.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.output.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.output.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Docker:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild]
@@ -133,9 +133,9 @@ jobs:
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.output.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.output.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.output.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
