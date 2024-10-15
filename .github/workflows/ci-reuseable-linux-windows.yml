@@ -72,7 +72,7 @@ jobs:
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
       linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'false' }}
-      skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
+      skip_rerun: ${{ github.event.inputs.skip_rerun || 'true' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Set output
