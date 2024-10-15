@@ -2,11 +2,6 @@ name: ci - windows binary build
 
 on:
   workflow_call:
-    secrets:
-      vt_api_key:
-        required: true
-      GH_TOKEN:
-        required: true
     inputs:
       source_repo:
         type: string
