@@ -67,11 +67,11 @@ env:
 
 jobs:
   Check-for-new-iperf3-tag:
-    if: ( github.event.inputs.skip_new_tag_check == 'false' || contains('github.event.inputs.skip_new_tag_check', 'true') )
+    if: ${{ github.event.inputs.skip_new_tag_check == 'false' || contains('github.event.inputs.skip_new_tag_check', 'true') }}
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
-      force_build: ( github.event.force_build == 'false' || contains('github.event.inputs.force_build', 'true') )
+      force_build: ${{ github.event.force_build == 'false' || contains('github.event.inputs.force_build', 'true') }}
 
   Linux-Emulation:
     needs: Check-for-new-iperf3-tag
