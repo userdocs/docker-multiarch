@@ -104,7 +104,7 @@ jobs:
 
   Iperf3-Tag:
     needs: Scheduled-Defaults
-    if: needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false'
+    if: ${{ needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'false' }}
     uses: ./.github/workflows/ci-check-for-new-release-tag.yml
     secrets: inherit
     with:
@@ -112,7 +112,7 @@ jobs:
 
   Linux-Emulation:
     needs: [Scheduled-Defaults, Iperf3-Tag]
-    if: always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' &&  needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'true'
+    if: always() && ${{ needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' }} && ${{ needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'true' }}
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
     with:
@@ -122,7 +122,7 @@ jobs:
 
   Linux-Crossbuild:
     needs: [Scheduled-Defaults, Iperf3-Tag]
-    if: always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' && needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'false'
+    if: always() && ${{ needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' }} && ${{ needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'false' }}
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
     with:
@@ -132,13 +132,13 @@ jobs:
 
   Docker:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild]
-    if: always() && (needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success') && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' && needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' )
+    if: always() && ${{ needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success' }} && ${{ needs.Iperf3-Tag.outputs.continue_build == 'yes' && needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' }}
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
 
   Windows:
     needs: [Iperf3-Tag]
-    if: needs.Iperf3-Tag.outputs.continue_build == 'yes' && github.event.inputs.windows == 'false'
+    if: ${{ needs.Iperf3-Tag.outputs.continue_build == 'yes' && github.event.inputs.windows == 'false' }}
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
     with:
@@ -148,7 +148,7 @@ jobs:
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
-    if: always() && failure() && needs.Scheduled-Defaults.outputs.skip_rerun == 'false'
+    if: always() && failure() && ${{ needs.Scheduled-Defaults.outputs.skip_rerun == 'false' }}
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
