@@ -17,7 +17,7 @@ on:
         default: false
         type: boolean
       linux_build_type:
-        description: "Build iperf3 via qemu crossbuild instead of emulation"
+        description: "Build Linux iperf3 via crossbuild"
         required: true
         default: false
         type: boolean
@@ -42,7 +42,7 @@ on:
         default: false
         type: boolean
       retries:
-        description: "Number of automatic rerun retries to attempt"
+        description: "Automatic rerun retries to attempt?"
         required: true
         default: "1"
         type: choice
