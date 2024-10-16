@@ -53,11 +53,8 @@ jobs:
           file ${{ github.workspace }}/build/bin/iperf3
           otool -L ${{ github.workspace }}/build/bin/iperf3
 
-      - name: Copy
-        run: cp ${{ github.workspace }}/build/bin/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
+          path: ${{ github.workspace }}/build
