@@ -37,7 +37,7 @@ on:
         required: true
         default: false
       osx-13-amd64:
-        description: "Skip OSX 3 amd64 build"
+        description: "Skip OSX 13 amd64 build"
         type: boolean
         required: true
         default: false
