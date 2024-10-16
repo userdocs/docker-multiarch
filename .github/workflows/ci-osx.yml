@@ -15,6 +15,9 @@ on:
       brew_cellar:
         type: string
         required: true
+      brew_install:
+        type: string
+        required: true
       target:
         type: string
         required: true
@@ -33,7 +36,7 @@ jobs:
       - name: Install packages
         run: |
           brew update || brew update-reset
-          brew install autoconf automake libtool
+          ${{ inputs.brew_install }}
 
       - name: Check openssl
         run: ls -la ${{ inputs.brew_cellar }}/openssl@3/*/lib
