@@ -12,12 +12,20 @@ jobs:
         include:
           - arch: amd64
             target: x86_64-apple-darwin
+            dlarch: iperf3-amd64
           - arch: arm64
             target: arm64-apple-darwin
+            dlarch: iperf3-arm64v8
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+
+      - name: test
+        run: |
+          curl -sLo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.dlarch }}
+          chmod +x iperf3
+          iperf3 --version
 
       - name: Install packages
         run: |
