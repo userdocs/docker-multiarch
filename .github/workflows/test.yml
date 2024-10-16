@@ -25,10 +25,6 @@ jobs:
           brew update || brew update-reset
           brew install autoconf automake pkg-config libtool
 
-      - name: Set CC
-        run: |
-          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
-
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
 
