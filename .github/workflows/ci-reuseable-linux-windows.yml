@@ -46,6 +46,12 @@ on:
         required: true
         default: false
         type: boolean
+      retries:
+        description: "Number of rerun retries"
+        required: true
+        default: "1"
+        type: choice
+        options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
   schedule:
     - cron: "*/5 * * * *" # every 5 minutes
