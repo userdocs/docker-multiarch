@@ -44,7 +44,7 @@ jobs:
 
       - name: configure
         working-directory: iperf3
-        run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
+        run: CC=clang CFLAGS="-O2" LDFLAGS="-static-libgcc -static-libstdc++ -static" ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
 
       - name: make
         working-directory: iperf3
