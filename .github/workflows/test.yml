@@ -28,7 +28,7 @@ jobs:
         run: git clone https://github.com/esnet/iperf.git iperf3
 
       - name: Set CC
-        run: echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+        run: echo "LDFLAGS=-static CFLAGS=-static CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
 
       - name: Build
         working-directory: iperf3
