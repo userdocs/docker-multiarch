@@ -171,13 +171,29 @@ jobs:
 
   osx:
     needs: [Iperf3-Tag]
+    strategy:
+      matrix:
+        target: [macos-13, macos-latest]
+        include:
+          - target: macos-13
+            brew_cellar: "/usr/local/Cellar"
+            source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+            source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+            artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+          - target: macos-latest
+            brew_cellar: "/opt/homebrew/Cellar"
+            source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+            source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+            artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
     if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.osx == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-osx.yml
     secrets: inherit
     with:
-      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
-      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      brew_cellar: ${{ matrix.brew_cellar }}
+      target: ${{ matrix.target }}
+      source_repo: ${{ matrix.source_repo }}
+      source_branch: ${{ matrix.source_branch }}
+      artifacts_only: ${{ matrix.artifacts_only }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows, osx]

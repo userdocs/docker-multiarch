@@ -12,13 +12,19 @@ on:
       artifacts_only:
         type: string
         required: true
+      brew_cellar:
+        type: string
+        required: true
+      target:
+        type: string
+        required: true
 
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.target }}
 
     steps:
       - name: Clone repository
@@ -30,13 +36,13 @@ jobs:
           brew install autoconf automake libtool
 
       - name: Check openssl
-        run: ls -la afasfa/openssl@3/*/lib
+        run: ls -la ${{ inputs.brew_cellar }}/openssl@3/*/lib
 
       - name: Openssl Static Libraries
         run: |
           mkdir -p ${{ github.workspace }}/openssl_libs
-          cp -fv afasfa/openssl@3/*/lib/libcrypto.a ${{ github.workspace }}/openssl_libs/
-          cp -fv afasfa/openssl@3/*/lib/libssl.a ${{ github.workspace }}/openssl_libs/
+          cp -fv ${{ inputs.brew_cellar }}/openssl@3/*/lib/libcrypto.a ${{ github.workspace }}/openssl_libs/
+          cp -fv ${{ inputs.brew_cellar }}/openssl@3/*/lib/libssl.a ${{ github.workspace }}/openssl_libs/
 
       - name: Check openssl_libs
         run: ls -la openssl_libs
