@@ -1,7 +1,6 @@
-name: ci-osx
+name: ci - osx
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       source_repo:
