@@ -100,7 +100,7 @@ jobs:
 
       - name: sha256sum
         run: |
-          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > iperf3-${{ inputs.binary_filename }}.url
+          printf '%s' https://www.virustotal.com/gui/file/$(shasum -a 256 ${{ env.binary_path }} | awk '{print $1}') > iperf3-${{ inputs.binary_filename }}.url
           cat iperf3-${{ inputs.binary_filename }}.url
 
       - name: Create tag env
