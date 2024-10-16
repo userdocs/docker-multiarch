@@ -1,41 +1,49 @@
-name: test
+name: CI
 
 on:
   workflow_dispatch:
-    inputs:
-      fake_tag:
-        description: "Set fake tag to force a build - 99.99.99"
-        required: false
-        default: ""
-      run_tests:
-        description: "Run tests"
-        required: false
-        default: false
-        type: boolean
-
-permissions:
-  actions: write
-
-env:
-  GH_TOKEN: ${{ github.token }}
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
+      matrix:
+        arch:
+          - amd64
+          - arm64
+        include:
+          - arch: amd64
+            target: x86_64-apple-darwin
+          - arch: arm64
+            target: arm64-apple-darwin
+
     steps:
-      - name: Check if fake_tag is provided
-        if: ${{ github.event.inputs.fake_tag == '' }}
-        run: echo "no fakes here"
+      - name: Clone repository
+        uses: actions/checkout@v4
 
-      - name: Check if fake_tag is provided
-        if: ${{ github.event.inputs.fake_tag != '' }}
-        run: echo "fake_tag is provided ${{ github.event.inputs.fake_tag }}"
-
-      - name: Skip tests if run_tests is false
-        if: ${{ github.event.inputs.run_tests == 'false' }}
-        run: echo "Not Running tests..."
-
-      - name: Run tests if run_tests is true
-        if: ${{ github.event.inputs.run_tests == 'true' }}
+      - name: Install packages
         run: |
-          echo "Running tests..."
+          # brew update sometimes fails with "Fetching /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask failed!"
+          brew update || brew update-reset
+          brew install autoconf automake pkg-config
+      - name: Set CC
+        run: |
+          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+
+      - name: Clone
+        run: git clone https://github.com/esnet/iperf.git iperf3
+
+
+      - name: Build
+        working-directory: iperf3
+        run: |
+          ./bootstrap.sh
+          ./configure --host="${{ matrix.target }}$(uname -r)" --disable-shared --enable-static-bin --prefix=$HOME
+          make -j"$(sysctl -n hw.logicalcpu)"
+          file ./src/iperf3
+          cp ../src/iperf3 iperf3-macos-${{ matrix.arch }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: iperf3-macos-${{ matrix.arch }}
+          path: iperf3/iperf3-macos-${{ matrix.arch }}
