@@ -38,7 +38,7 @@ jobs:
       - name: Check openssl
         run: ls -la ${{ inputs.brew_cellar }}/openssl@3/*/lib
 
-      - name: Openssl Static Libraries
+      - name: Copy Openssl Static Libraries to openssl_libs
         run: |
           mkdir -p ${{ github.workspace }}/openssl_libs
           cp -fv ${{ inputs.brew_cellar }}/openssl@3/*/lib/libcrypto.a ${{ github.workspace }}/openssl_libs/
@@ -81,12 +81,12 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: iperf3-${{ matrix.target }}
+          name: iperf3-${{ inputs.target }}
           path: ${{ github.workspace }}/build
 
       - name: Upload artifact
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: iperf3-${{ matrix.target }}-config.log
+          name: iperf3-${{ inputs.target }}-config.log
           path: ${{ github.workspace }}/iperf3/config.log
