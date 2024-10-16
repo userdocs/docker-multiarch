@@ -35,14 +35,14 @@ jobs:
 
       - name: Set CC
         run: |
-          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" -L${{ github.workspace }}/iperf3/src/.libs -l:libiperf.a >> "$GITHUB_ENV"
 
       - name: Configure
         working-directory: iperf3
         run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
       - name: Make
         working-directory: iperf3
-        run: LDFLAGS="-L${{ github.workspace }}/iperf3/src/.libs -l:libiperf.a" make -j"$(sysctl -n hw.logicalcpu)"
+        run: make -j"$(sysctl -n hw.logicalcpu)"
 
       - name: Make install
         working-directory: iperf3
