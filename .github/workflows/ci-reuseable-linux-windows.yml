@@ -186,7 +186,7 @@ jobs:
         Windows,
         Osx,
       ]
-    if: always() && ( contains(needs.*.result, 'success' && !contains(needs.*.result, 'failure') ) && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' )
+    if: always() && ( !contains(needs.*.result, 'failure') && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' )
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
 
