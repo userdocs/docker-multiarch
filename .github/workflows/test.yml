@@ -49,7 +49,7 @@ jobs:
       - name: test
         run: |
           file ./build/bin/iperf3
-          ldd ./build/bin/iperf3
+          otool -L ./build/bin/iperf3
 
       - name: copy
         working-directory: iperf3
