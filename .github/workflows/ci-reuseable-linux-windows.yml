@@ -183,11 +183,11 @@ jobs:
     uses: ./.github/workflows/ci-osx.yml
     secrets: inherit
     with:
+      brew_cellar: ${{ matrix.brew_cellar }}
+      target: ${{ matrix.target }}
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
       artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
-      brew_cellar: ${{ matrix.brew_cellar }}
-      target: ${{ matrix.target }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
