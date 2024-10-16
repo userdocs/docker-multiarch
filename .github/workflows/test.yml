@@ -21,12 +21,6 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: test
-        run: |
-          wget -O iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.dlarch }}
-          chmod +x iperf3
-          iperf3 --version
-
       - name: Install packages
         run: |
           brew update || brew update-reset
