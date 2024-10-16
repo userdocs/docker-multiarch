@@ -23,7 +23,7 @@ jobs:
         run: |
           # brew update sometimes fails with "Fetching /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask failed!"
           brew update || brew update-reset
-          brew install autoconf automake pkg-config
+          brew install autoconf automake pkg-config libtool
 
       - name: Set CC
         run: |
