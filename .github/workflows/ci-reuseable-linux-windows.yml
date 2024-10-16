@@ -36,6 +36,16 @@ on:
         type: boolean
         required: true
         default: false
+      osx-13-amd64:
+        description: "Skip OSX 3 amd64 build"
+        type: boolean
+        required: true
+        default: false
+      osx-14-arm64:
+        description: "Skip OSX 14 arm64 build"
+        type: boolean
+        required: true
+        default: false
       skip_rerun:
         description: "Skip rerun?"
         required: true
@@ -87,6 +97,8 @@ jobs:
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
       linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'false' }}
+      osx-13-amd64: ${{ github.event.inputs.osx-13-amd64 || 'false' }}
+      osx-14-arm64: ${{ github.event.inputs.osx-14-arm64 || 'false' }}
       skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
@@ -102,6 +114,8 @@ jobs:
           printf '\n%b\n' "linux_build_type: \`${{ github.event.inputs.linux_build_type || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "linux: \`${{ github.event.inputs.linux || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "windows: \`${{ github.event.inputs.windows || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "osx-13-amd64: \`${{ github.event.inputs.osx-13-amd64 || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "osx-14-arm64: \`${{ github.event.inputs.osx-14-arm64 || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "skip_rerun: \`${{ github.event.inputs.skip_rerun || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "retries: \`${{ github.event.inputs.retries || '1' }}\`" >> $GITHUB_STEP_SUMMARY
 
@@ -122,6 +136,8 @@ jobs:
           printf '\n%b\n' "linux_build_type: \`${{ needs.Scheduled-Defaults.outputs.linux_build_type }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "linux: \`${{ needs.Scheduled-Defaults.outputs.linux }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "windows: \`${{ needs.Scheduled-Defaults.outputs.windows }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "osx-13-amd64: \`${{ needs.Scheduled-Defaults.outputs.osx-13-amd64 }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '\n%b\n' "osx-14-arm64: \`${{ needs.Scheduled-Defaults.outputs.osx-14-arm64 }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "skip_rerun: \`${{ needs.Scheduled-Defaults.outputs.skip_rerun }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%b\n' "retries: \`${{ needs.Scheduled-Defaults.outputs.retries }}\`" >> $GITHUB_STEP_SUMMARY
 
@@ -166,6 +182,30 @@ jobs:
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
       artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+
+  osx-13-amd64:
+    needs: [Iperf3-Tag]
+    if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.osx-13-amd64 == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+    uses: ./.github/workflows/ci-osx.yml
+    secrets: inherit
+    with:
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      brew_cellar: "/usr/local/Cellar"
+      osx_matrix: "macos-13"
+
+  osx-14-arm64:
+    needs: [Iperf3-Tag]
+    if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.osx-14-arm64 == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+    uses: ./.github/workflows/ci-osx.yml
+    secrets: inherit
+    with:
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+      brew_cellar: "/opt/homebrew/Cellar"
+      osx_matrix: "macos-latest"
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows]
