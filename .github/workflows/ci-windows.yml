@@ -66,17 +66,17 @@ jobs:
 
       - name: sha256sum
         run: |
-          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ matrix.name }}/bin/iperf3.exe | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
-          cat ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
+          printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ matrix.name }}/bin/iperf3.exe | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.url
+          cat ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.url
 
       - name: Archive build
-        run: Compress-Archive ${{ matrix.name }} ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
+        run: Compress-Archive ${{ matrix.name }} ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.zip
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: |
-            ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
+            ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.zip
             ${{ matrix.name }}/bin/iperf3.exe
             ${{ matrix.name }}/bin/cygwin1.dll
 
@@ -91,14 +91,14 @@ jobs:
         if: inputs.artifacts_only == 'false'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ matrix.name }}-amd64-${{ matrix.filename }}win"
+          name: "${{ matrix.name }}-amd64-win${{ matrix.filename }}"
           path: |
-            ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
-            ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.url
+            ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.zip
+            ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.url
 
       - name: "Dev - Create artifacts"
         if: inputs.artifacts_only == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ matrix.name }}-amd64-${{ matrix.filename }}win"
+          name: "${{ matrix.name }}-amd64-win${{ matrix.filename }}"
           path: "${{ matrix.name }}"
