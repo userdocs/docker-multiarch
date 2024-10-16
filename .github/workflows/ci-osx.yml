@@ -118,7 +118,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: iperf3-${{ inputs.target }}
+          name: iperf3-${{ inputs.binary_filename }}
           path: |
             ${{ env.binary_path }}
             iperf3-${{ inputs.binary_filename }}.url
@@ -127,5 +127,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: iperf3-${{ inputs.target }}-config.log
+          name: iperf3-${{ inputs.binary_filename }}-config.log
           path: ${{ github.workspace }}/iperf3/config.log

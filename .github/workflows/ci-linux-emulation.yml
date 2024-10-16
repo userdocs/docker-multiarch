@@ -134,7 +134,7 @@ jobs:
       - name: "Create artifact"
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.name }}-${{ matrix.arch }} ${{ env.release_tag }}
+          name: ${{ matrix.name }}-${{ matrix.arch }}
           path: |
             ${{ env.binary_path }}
             ${{ matrix.name }}-${{ matrix.arch }}.url
