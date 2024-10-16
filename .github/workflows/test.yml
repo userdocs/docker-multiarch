@@ -28,7 +28,7 @@ jobs:
         run: git clone https://github.com/esnet/iperf.git iperf3
 
       - name: Set CC
-        run: echo "LDFLAGS=-static CFLAGS=-static CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+        run: echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
 
       - name: Build
         working-directory: iperf3
@@ -36,7 +36,7 @@ jobs:
 
       - name: configure
         working-directory: iperf3
-        run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
+        run: LDFLAGS="-static" CFLAGS="-static" CC=clang ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
 
       - name: make
         working-directory: iperf3
