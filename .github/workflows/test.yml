@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install packages
         run: |
@@ -39,10 +39,10 @@ jobs:
           ./configure --host="${{ matrix.target }}" --disable-shared --enable-static-bin --prefix=$HOME
           make -j"$(sysctl -n hw.logicalcpu)"
           file ./src/iperf3
-          cp ./src/iperf3 ../iperf3-macos-${{ matrix.arch }}
+          cp ./src/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: iperf3-macos-${{ matrix.arch }}
-          path: iperf3/iperf3-macos-${{ matrix.arch }}
+          path: iperf3-macos-${{ matrix.arch }}
