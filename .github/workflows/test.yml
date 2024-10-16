@@ -36,7 +36,7 @@ jobs:
       - name: Set CC
         run: |
           echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
-          echo "LDFLAGS=-Llib -l:libiperf.a" >> "$GITHUB_ENV"
+          echo "LDFLAGS=-l:libiperf.a" >> "$GITHUB_ENV"
 
       - name: Configure
         working-directory: iperf3
