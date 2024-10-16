@@ -35,7 +35,7 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/openssl_libs
           cp -fv ${{ env.openssl_dir }}/libcrypto.a ${{ github.workspace }}/openssl_libs/
-          cp -fv ${{ env.openssl_dir }}/libssl.a.a ${{ github.workspace }}/openssl_libs/
+          cp -fv ${{ env.openssl_dir }}/libssl.a ${{ github.workspace }}/openssl_libs/
 
       - name: Check ${{ env.openssl_dir }}
         run: |
