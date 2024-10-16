@@ -31,7 +31,6 @@ jobs:
       - name: Build
         working-directory: iperf3
         run: |
-
           ./bootstrap.sh
           ./configure --disable-shared --enable-static-bin --disable-silent-rules --disable-profiling
           make -j"$(sysctl -n hw.logicalcpu)"
@@ -43,3 +42,10 @@ jobs:
         with:
           name: iperf3-macos-${{ matrix.arch }}
           path: iperf3-macos-${{ matrix.arch }}
+
+      - name: Upload artifact
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: config.log
+          path: ${{ github.workspace }}/iperf3/config.log
