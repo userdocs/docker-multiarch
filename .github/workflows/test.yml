@@ -29,7 +29,7 @@ jobs:
       - name: Check openssl
         run: |
           ls -la /opt/homebrew/Cellar/openssl@3/*/lib
-          echo "openssl_dir=$(cd opt/homebrew/Cellar/openssl@3/*/lib && pwd)"  >> "$GITHUB_ENV"
+          echo "openssl_dir=$(cd /opt/homebrew/Cellar/openssl@3/*/lib && pwd)"  >> "$GITHUB_ENV"
 
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
