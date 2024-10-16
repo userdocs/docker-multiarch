@@ -185,10 +185,10 @@ jobs:
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
     with:
-      release_tags: ${{ needs.Linux-Emulation.outputs.release_tags || needs.Linux-Crossbuild.outputs.release_tags || needs.Windows.outputs.release_tags }}
+      release_tags: ${{ needs.Linux-Emulation.outputs.release_tags || needs.Linux-Crossbuild.outputs.release_tags || needs.Windows.outputs.release_tags || needs.Osx.outputs.release_tags }}
 
   Docker:
-    needs: [Release]
+    needs: [Linux-Emulation, Linux-Crossbuild, Release]
     if: always() && ( contains(needs.Linux-Emulation, 'success') || contains(needs.Linux-Crossbuild.result, 'success') ) && ( needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
