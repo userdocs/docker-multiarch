@@ -28,20 +28,33 @@ jobs:
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
 
+      - name: Set CC
+        run: |
+          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+
       - name: Build
         working-directory: iperf3
         run: |
           ./bootstrap.sh
-          ./configure --disable-silent-rules --disable-profiling
+          ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling
           make -j"$(sysctl -n hw.logicalcpu)"
+
+      - name: test
+        working-directory: iperf3
+        run: |
+          ls -la ./src/iperf3
           file ./src/iperf3
+
+      - name: copy
+        working-directory: iperf3
+        run: |
           cp ./src/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: iperf3-macos-${{ matrix.arch }}
-          path: iperf3-macos-${{ matrix.arch }}
+          path: ${{ github.workspace }}/src/iperf3
 
       - name: Upload artifact
         if: failure()
