@@ -23,7 +23,7 @@ jobs:
 
       - name: test
         run: |
-          curl -sLo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.dlarch }}
+          wget -O iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/${{ matrix.dlarch }}
           chmod +x iperf3
           iperf3 --version
 
