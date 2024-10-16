@@ -186,6 +186,7 @@ jobs:
     secrets: inherit
     with:
       brew_cellar: ${{ matrix.brew_cellar }}
+      brew_install: ${{ matrix.brew_install }}
       target: ${{ matrix.target }}
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
