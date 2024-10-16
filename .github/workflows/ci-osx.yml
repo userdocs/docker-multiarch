@@ -13,9 +13,12 @@ on:
       artifacts_only:
         type: string
         required: true
+      brew_cellar:
+        type: string
+        required: true
 jobs:
   build:
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.target }}
 
     steps:
       - name: Clone repository
