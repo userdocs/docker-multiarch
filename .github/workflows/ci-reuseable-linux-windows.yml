@@ -97,7 +97,7 @@ jobs:
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Setting Outputs from inputs
-        run: printf '%b\n' "Setting Outputs from inputs"
+        run: printf '%b\n' "Setting Outputs from Inputs"
 
   Show-Ouputs:
     if: needs.skip_duplicate_job.outputs.should_skip != 'true'
@@ -134,7 +134,6 @@ jobs:
     with:
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   Linux-Crossbuild:
     needs: [Scheduled-Defaults, Iperf3-Tag]
@@ -144,13 +143,6 @@ jobs:
     with:
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
-
-  Docker:
-    needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild]
-    if: always() && ( needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
-    uses: ./.github/workflows/ci-docker.yml
-    secrets: inherit
 
   Windows:
     needs: [Scheduled-Defaults, Iperf3-Tag]
@@ -162,7 +154,7 @@ jobs:
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
       artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
-  osx:
+  Osx:
     needs: [Scheduled-Defaults, Iperf3-Tag]
     if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.osx == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     strategy:
@@ -183,10 +175,29 @@ jobs:
       target: ${{ matrix.target }}
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
+
+  Release:
+    needs:
+      [
+        Scheduled-Defaults,
+        Iperf3-Tag,
+        Linux-Emulation,
+        Linux-Crossbuild,
+        Windows,
+        Osx,
+      ]
+    if: always() && ( contains(needs.*.result, 'success') && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' )
+    uses: ./.github/workflows/ci-release.yml
+    secrets: inherit
+
+  Docker:
+    needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Release]
+    if: always() && ( needs.Linux-Emulation.result == 'success' || needs.Linux-Crossbuild.result == 'success' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+    uses: ./.github/workflows/ci-docker.yml
+    secrets: inherit
 
   rerun-on-failure:
-    needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows, osx]
+    needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows, Osx]
     if: always() && failure() && ( needs.Scheduled-Defaults.outputs.skip_rerun == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     name: rerun-on-failure
     runs-on: ubuntu-latest

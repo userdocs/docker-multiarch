@@ -1,0 +1,55 @@
+name: ci - release
+
+on:
+  workflow_call:
+
+env:
+  GH_TOKEN: "${{ github.TOKEN }}"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: "release-artifacts"
+          pattern: iperf3-*
+          merge-multiple: true
+
+      - name: Virustotal scan results
+        run: |
+          pushd release-artifacts || exit 1
+
+          for virus_total_urls in iperf3-*\.url; do
+            dependency_version+=("${virus_total_urls}")
+          done
+
+          readarray -t release_sorted < <(printf '%s\n' "${dependency_version[@]}" | sort)
+
+          for filenames in "${release_sorted[@]}"; do
+            virustotal_url="$(head -1 "${filenames}" | tr -d '\n' | tr -d '\r' | | tr -d '\r\n')"
+            sed -i -r 's|(\['${filenames//\.url/}'\])\((.*)\)|\1('${virustotal_url}')|' ${{ github.workspace }}/release-body.md
+          done
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automated Change
+          file_pattern: "release-body.md"
+
+      - name: "Publish release ${{ needs.build.outputs.set-tag }}"
+        if: inputs.artifacts_only == 'false'
+        uses: ncipollo/release-action@v1
+        with:
+          prerelease: false
+          artifacts: release-artifacts/iperf3-*[!\.url]
+          replacesArtifacts: true
+          tag: ${{ needs.build.outputs.set-tag }}
+          name: iperf3 ${{ needs.build.outputs.set-tag }}
+          allowUpdates: true
+          bodyFile: release-body.md
+          token: ${{ github.token }}

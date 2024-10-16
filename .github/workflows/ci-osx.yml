@@ -9,9 +9,6 @@ on:
       source_branch:
         type: string
         required: true
-      artifacts_only:
-        type: string
-        required: true
       brew_cellar:
         type: string
         required: true
