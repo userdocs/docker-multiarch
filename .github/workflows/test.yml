@@ -36,7 +36,15 @@ jobs:
         working-directory: iperf3
         run: |
           ./bootstrap.sh
+
+      - name: configure
+        working-directory: iperf3
+        run: |
           ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling
+
+      - name: make
+        working-directory: iperf3
+        run: |
           make -j"$(sysctl -n hw.logicalcpu)"
 
       - name: test
@@ -54,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/src/iperf3
+          path: ${{ github.workspace }}/iperf3/src
 
       - name: Upload artifact
         if: failure()
