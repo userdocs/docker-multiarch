@@ -59,3 +59,10 @@ jobs:
         with:
           name: iperf3-macos-${{ matrix.arch }}
           path: ${{ github.workspace }}/build
+
+      - name: Upload artifact
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iperf3-macos-${{ matrix.arch }}
+          path: ${{ github.workspace }}/iperf3/config.log
