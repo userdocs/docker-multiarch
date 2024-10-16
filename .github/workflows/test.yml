@@ -41,7 +41,7 @@ jobs:
         run: |
 
           ./bootstrap.sh
-          ./configure --host="${{ matrix.target }}$(uname -r)" --disable-shared --enable-static-bin --prefix=$HOME
+          ./configure --disable-shared --enable-static-bin --prefix=$HOME
           make -j"$(sysctl -n hw.logicalcpu)"
           file ./src/iperf3
           cp ./src/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
