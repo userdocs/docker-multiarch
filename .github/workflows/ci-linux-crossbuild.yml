@@ -3,8 +3,8 @@ name: ci - linux binary cross build
 on:
   workflow_call:
     outputs:
-      set-tag:
-        value: ${{ jobs.build.outputs.set-tag }}
+      release_tags:
+        value: ${{ jobs.build.outputs.release_tags }}
     inputs:
       source_repo:
         type: string
@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      set-tag: ${{ steps.set-tag.outputs.release_tag }}
+      release_tags: ${{ steps.release_tags.outputs.release_tag }}
     strategy:
       fail-fast: false
       matrix:
@@ -113,7 +113,7 @@ jobs:
         run: echo "release_tag=$(sed -rn 's|(.*)\[(.*)],\[https://github.com/esnet/iperf],(.*)|\2|p' ${{ matrix.name }}/configure.ac)" >> $GITHUB_ENV
 
       - name: Set tag env to output
-        id: set-tag
+        id: release_tags
         run: echo "release_tag=${{ env.release_tag }}" >> "$GITHUB_OUTPUT"
 
       - name: Generate artifact attestation  ${{ inputs.distinct_id }}

@@ -3,8 +3,8 @@ name: ci - windows binary build
 on:
   workflow_call:
     outputs:
-      set-tag:
-        value: ${{ jobs.build.outputs.set-tag }}
+      release_tags:
+        value: ${{ jobs.build.outputs.release_tags }}
     inputs:
       source_repo:
         type: string
@@ -23,7 +23,7 @@ jobs:
   build:
     runs-on: windows-latest
     outputs:
-      set-tag: ${{ steps.set-tag.outputs.release_tag }}
+      release_tags: ${{ steps.release_tags.outputs.release_tag }}
     strategy:
       fail-fast: false
       matrix:
@@ -84,7 +84,7 @@ jobs:
         run: echo "release_tag=$(Get-Content -Path iperf3_version)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Set tag env to output
-        id: set-tag
+        id: release_tags
         run: echo "release_tag=${{ env.release_tag }}" >> $env:GITHUB_OUTPUT
 
       - name: "Release - Create artifacts"
