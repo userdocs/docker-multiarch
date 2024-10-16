@@ -47,10 +47,9 @@ jobs:
         run: make install
 
       - name: test
-        working-directory: iperf3
         run: |
-          ls -la ./src/iperf3
-          file ./src/iperf3
+          file ./build/bin/iperf3
+          ldd ./build/bin/iperf3
 
       - name: copy
         working-directory: iperf3
