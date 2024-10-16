@@ -31,7 +31,7 @@ jobs:
           readarray -t release_sorted < <(printf '%s\n' "${dependency_version[@]}" | sort)
 
           for filenames in "${release_sorted[@]}"; do
-            virustotal_url="$(head -1 "${filenames}" | tr -d '\n' | tr -d '\r' | | tr -d '\r\n')"
+            virustotal_url="$(head -1 "${filenames}" | tr -d '\n' | tr -d '\r' | tr -d '\r\n')"
             sed -i -r 's|(\['${filenames//\.url/}'\])\((.*)\)|\1('${virustotal_url}')|' ${{ github.workspace }}/release-body.md
           done
 
