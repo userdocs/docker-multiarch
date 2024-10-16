@@ -2,6 +2,8 @@ name: ci - windows binary build
 
 on:
   workflow_call:
+    outputs:
+      set-tag: ${{ steps.set-tag.outputs.release_tag }}
     inputs:
       source_repo:
         type: string

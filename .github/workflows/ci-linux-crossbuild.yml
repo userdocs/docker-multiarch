@@ -2,6 +2,9 @@ name: ci - linux binary cross build
 
 on:
   workflow_call:
+    outputs:
+      set-tag:
+        value: ${{ jobs.build.outputs.set-tag }}
     inputs:
       source_repo:
         type: string
