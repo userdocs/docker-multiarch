@@ -82,7 +82,7 @@ jobs:
           path: ${{ github.workspace }}/iperf3/config.log
 
   build-arm64:
-    runs-on: macos-13-xlarge
+    runs-on: macos-latest
     strategy:
       matrix:
         arch: [arm64]
