@@ -192,7 +192,7 @@ jobs:
 
   Docker:
     needs: [Release]
-    if: always() && ( !contains(needs.*.result, 'failure' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+    if: always() && ( !contains(needs.*.result, 'failure' && needs.Scheduled-Defaults.outputs.artifacts_only == 'false' ) && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
 
