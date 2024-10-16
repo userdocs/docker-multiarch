@@ -26,6 +26,20 @@ jobs:
           brew update || brew update-reset
           brew install autoconf automake libtool
 
+      - name: custom clang
+        run: curl -LO https://github.com/dzbarsky/static-clang/releases/latest/download/darwin_arm64.tar.xz
+
+      - name: test clang
+        run: clang --version
+
+      - name: custom clang unpack
+        run: |
+          sudo chown -R $(whoami) /usr/local
+          tar -xf darwin_arm64.tar.xz -C /usr/local
+
+      - name: test clang
+        run: clang --version
+
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
 
