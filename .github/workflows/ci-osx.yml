@@ -9,6 +9,15 @@ on:
       target:
         type: string
         required: true
+      source_repo:
+        type: string
+        required: true
+      source_branch:
+        type: string
+        required: true
+      artifacts_only:
+        type: string
+        required: true
 
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
