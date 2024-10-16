@@ -42,7 +42,7 @@ jobs:
         run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
       - name: Make
         working-directory: iperf3
-        run: LDFLAGS="-L${{ github.workspace }}/iperf3/lib -l:libiperf.a" make -j"$(sysctl -n hw.logicalcpu)"
+        run: LDFLAGS="-L${{ github.workspace }}/iperf3/src/.libs -l:libiperf.a" make -j"$(sysctl -n hw.logicalcpu)"
 
       - name: Make install
         working-directory: iperf3
