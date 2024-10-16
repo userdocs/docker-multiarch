@@ -95,22 +95,6 @@ jobs:
       osx: ${{ github.event.inputs.osx || 'false' }}
       skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
       retries: ${{ github.event.inputs.retries || '1' }}
-    steps:
-      - name: Set output
-        run: |
-          printf '%b\n' "# Input Settings Summary" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' ":octocat: Here is a summary of input values set by our reusable workflow" >> $GITHUB_STEP_SUMMARY
-
-          printf '\n%b\n' "source_repo: \`${{ github.event.inputs.source_repo || 'https://github.com/esnet/iperf.git' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "source_branch: \`${{ github.event.inputs.source_branch || 'master' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "artifacts_only: \`${{ github.event.inputs.artifacts_only || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "skip_new_tag_check: \`${{ github.event.inputs.skip_new_tag_check || 'false'  }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "linux_build_type: \`${{ github.event.inputs.linux_build_type || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "linux: \`${{ github.event.inputs.linux || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "windows: \`${{ github.event.inputs.windows || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "osx: \`${{ github.event.inputs.osx || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "skip_rerun: \`${{ github.event.inputs.skip_rerun || 'false' }}\`" >> $GITHUB_STEP_SUMMARY
-          printf '\n%b\n' "retries: \`${{ github.event.inputs.retries || '1' }}\`" >> $GITHUB_STEP_SUMMARY
 
   Show-Ouputs:
     if: needs.skip_duplicate_job.outputs.should_skip != 'true'
