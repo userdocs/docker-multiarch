@@ -48,7 +48,7 @@ jobs:
         run: ls -la openssl_libs
 
       - name: Clone iperf3 repository
-        run: git clone --no-tags --single-branch --branch "${{ inputs.source_branch }}" --shallow-submodules --recurse-submodule --depth 1 "${{ inputs.source_repo }}" iperf3
+        run: git clone --no-tags --single-branch --branch ${{ inputs.source_branch }} --shallow-submodules --recurse-submodule --depth 1 ${{ inputs.source_repo }} iperf3
 
       - name: Bootstrap
         working-directory: iperf3
