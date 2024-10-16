@@ -3,12 +3,6 @@ name: ci - osx
 on:
   workflow_call:
     inputs:
-      brew_cellar:
-        type: string
-        required: true
-      target:
-        type: string
-        required: true
       source_repo:
         type: string
         required: true
