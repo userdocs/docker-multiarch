@@ -162,9 +162,11 @@ jobs:
         target: [macos-13, macos-latest]
         include:
           - target: macos-13
+            binary_filename: amd64-osx-13
             brew_cellar: "/usr/local/Cellar"
             brew_install: "brew install automake"
           - target: macos-latest
+            binary_filename: arm64-osx-14
             brew_cellar: "/opt/homebrew/Cellar"
             brew_install: "brew install autoconf automake libtool"
     uses: ./.github/workflows/ci-osx.yml
@@ -191,7 +193,19 @@ jobs:
     secrets: inherit
 
   rerun-on-failure:
-    needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows, Osx]
+    needs:
+      [
+        skip_duplicate_job,
+        Scheduled-Defaults,
+        Show-Ouputs,
+        Iperf3-Tag,
+        Linux-Emulation,
+        Linux-Crossbuild,
+        Windows,
+        Osx,
+        Release,
+        Docker,
+      ]
     if: always() && failure() && ( needs.Scheduled-Defaults.outputs.skip_rerun == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     name: rerun-on-failure
     runs-on: ubuntu-latest

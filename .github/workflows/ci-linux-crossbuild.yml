@@ -95,7 +95,7 @@ jobs:
         run: docker exec multiarch mv -f /root/local/bin/${{ matrix.name }} /root/${{ matrix.name }}-${{ matrix.release_name }}
 
       - name: Create path to binary env
-        run: echo "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.release_name }}" >> $GITHUB_ENV
+        run: printf '%s\n' "binary_path=${{ github.workspace }}/${{ matrix.name }}-${{ matrix.release_name }}" >> $GITHUB_ENV
 
       - name: VirusTotal Scan
         id: virustotal
@@ -104,19 +104,19 @@ jobs:
           vt_api_key: ${{ secrets.VT_API_KEY }}
           files: ${{ env.binary_path }}
 
-      - name: sha256sum ${{ inputs.distinct_id }}
+      - name: sha256sum
         run: |
           printf '%s' https://www.virustotal.com/gui/file/$(sha256sum ${{ env.binary_path }} | awk '{print $1}') > ${{ matrix.name }}-${{ matrix.release_name }}.url
           cat ${{ matrix.name }}-${{ matrix.release_name }}.url
 
       - name: Create tag env
-        run: echo "release_tag=$(sed -rn 's|(.*)\[(.*)],\[https://github.com/esnet/iperf],(.*)|\2|p' ${{ matrix.name }}/configure.ac)" >> $GITHUB_ENV
+        run: printf '%s\n' "release_tag=$(sed -rn 's|(.*)\[(.*)],\[https://github.com/esnet/iperf],(.*)|\2|p' ${{ matrix.name }}/configure.ac)" >> $GITHUB_ENV
 
       - name: Set tag env to output
         id: release_tags
-        run: echo "release_tag=${{ env.release_tag }}" >> "$GITHUB_OUTPUT"
+        run: printf '%s\n' "release_tag=${{ env.release_tag }}" >> "$GITHUB_OUTPUT"
 
-      - name: Generate artifact attestation  ${{ inputs.distinct_id }}
+      - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: ${{ env.binary_path }}
