@@ -50,7 +50,7 @@ jobs:
 
       - name: configure
         working-directory: iperf3
-        run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-shared --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
+        run: ./configure --host="${{ matrix.target }}$(uname -r)" --enable-static-bin --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
 
       - name: make
         working-directory: iperf3
