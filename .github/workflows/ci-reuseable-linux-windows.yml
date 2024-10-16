@@ -176,8 +176,10 @@ jobs:
         target: [macos-13, macos-latest]
         include:
           - target: macos-13
+            runs-on: macos-13
             brew_cellar: "/usr/local/Cellar"
           - target: macos-latest
+            runs-on: macos-latest
             brew_cellar: "/opt/homebrew/Cellar"
     if: always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) && ( needs.Scheduled-Defaults.outputs.osx-14-arm64 == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-osx.yml
