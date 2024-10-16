@@ -37,9 +37,8 @@ jobs:
           cp -fv ${{ env.openssl_dir }}/libcrypto.a ${{ github.workspace }}/openssl_libs/
           cp -fv ${{ env.openssl_dir }}/libssl.a ${{ github.workspace }}/openssl_libs/
 
-      - name: Check ${{ env.openssl_dir }}
-        run: |
-          ls -la ${{ env.openssl_dir }}
+      - name: Check openssl_libs
+        run: ls -la openssl_libs
 
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
@@ -53,7 +52,6 @@ jobs:
           printf '%s\n' "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
           printf '%s\n' "LDFLAGS=-L${{ github.workspace }}/openssl_libs" >> "$GITHUB_ENV"
 
-          -llibcrypto.a -llibssl.a
       - name: Configure
         working-directory: iperf3
         run: ./configure --host="${{ matrix.target }}$(uname -r)" --enable-shared=no --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
