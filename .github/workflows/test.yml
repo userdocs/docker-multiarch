@@ -6,10 +6,9 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+    strategy:
       matrix:
-        arch:
-          - amd64
-          - arm64
+        arch: [amd64, arm64]
         include:
           - arch: amd64
             target: x86_64-apple-darwin
@@ -18,29 +17,29 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Install packages
         run: |
           # brew update sometimes fails with "Fetching /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask failed!"
           brew update || brew update-reset
           brew install autoconf automake pkg-config
+
       - name: Set CC
         run: |
           echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
 
-      - name: Clone
+      - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
-
 
       - name: Build
         working-directory: iperf3
         run: |
           ./bootstrap.sh
-          ./configure --host="${{ matrix.target }}$(uname -r)" --disable-shared --enable-static-bin --prefix=$HOME
+          ./configure --host="${{ matrix.target }}" --disable-shared --enable-static-bin --prefix=$HOME
           make -j"$(sysctl -n hw.logicalcpu)"
           file ./src/iperf3
-          cp ../src/iperf3 iperf3-macos-${{ matrix.arch }}
+          cp ./src/iperf3 ../iperf3-macos-${{ matrix.arch }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
