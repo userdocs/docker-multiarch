@@ -27,7 +27,9 @@ jobs:
           brew install autoconf automake libtool
 
       - name: Check openssl
-        run: ls -la /opt/homebrew/Cellar/openssl@3/*/lib
+        run: |
+          ls -la /opt/homebrew/Cellar/openssl@3/*/lib
+          echo "openssl_dir=$(cd opt/homebrew/Cellar/openssl@3/*/lib && pwd)"  >> "$GITHUB_ENV"
 
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
@@ -38,8 +40,8 @@ jobs:
 
       - name: Set CC
         run: |
-          echo "CC=clang -target ${{ matrix.target }}$(uname -r)"  >> "$GITHUB_ENV"
-          # echo "LDFLAGS=-L${{ github.workspace }}/iperf3/src/.libs -liperf"  >> "$GITHUB_ENV"
+          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+          echo "LDFLAGS=-L${{ env.openssl_dir }} -l:libcrypto.a -l:libssl.a"  >> "$GITHUB_ENV"
 
       - name: Configure
         working-directory: iperf3
