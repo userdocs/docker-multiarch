@@ -95,6 +95,9 @@ jobs:
       osx: ${{ github.event.inputs.osx || 'false' }}
       skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
       retries: ${{ github.event.inputs.retries || '1' }}
+    steps:
+      - name: Setting Outputs from inputs
+        run: printf '%b\n' "Setting Outputs from inputs"
 
   Show-Ouputs:
     if: needs.skip_duplicate_job.outputs.should_skip != 'true'
