@@ -174,9 +174,6 @@ jobs:
     strategy:
       matrix:
         target: [macos-13, macos-latest]
-        source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
-        source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
-        artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
         include:
           - target: macos-13
             brew_cellar: "/usr/local/Cellar"
@@ -188,9 +185,9 @@ jobs:
     with:
       brew_cellar: ${{ matrix.brew_cellar }}
       target: ${{ matrix.target }}
-      source_repo: ${{ matrix.source_repo }}
-      source_branch: ${{ matrix.source_branch }}
-      artifacts_only: ${{ matrix.artifacts_only }}
+      source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
+      source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      artifacts_only: ${{ needs.Scheduled-Defaults.outputs.artifacts_only }}
 
   rerun-on-failure:
     needs: [Iperf3-Tag, Linux-Emulation, Linux-Crossbuild, Docker, Windows, osx]
