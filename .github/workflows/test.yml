@@ -57,11 +57,11 @@ jobs:
 
       - name: Test
         run: |
-          printf '\n%b\n' "🟦"
+          printf '\n%b\n\n' "🟦"
           ${{ github.workspace }}/build/bin/iperf3 --version
-          printf '\n%b\n' "🟦"
+          printf '\n%b\n\n' "🟦"
           file ${{ github.workspace }}/build/bin/iperf3
-          printf '\n%b\n' "🟦"
+          printf '\n%b\n\n' "🟦"
           otool -L ${{ github.workspace }}/build/bin/iperf3
 
       - name: Upload artifact
