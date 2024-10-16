@@ -41,7 +41,6 @@ jobs:
           file_pattern: "release-body.md"
 
       - name: "Publish release ${{ needs.build.outputs.set-tag }}"
-        if: inputs.artifacts_only == 'false'
         uses: ncipollo/release-action@v1
         with:
           prerelease: false
