@@ -25,7 +25,8 @@ jobs:
 
       - name: Check openssl
         run: |
-          ls -la /opt/homebrew/Cellar/openssl@3/*/lib
+          ls -la /opt/homebrew/Cellar/
+          ls -la /opt/homebrew/Cellar/openssl@1/*/lib
           printf '%s\n' "openssl_dir=$(cd /usr/local/Cellar/openssl@3/*/lib && pwd)" >> "$GITHUB_ENV"
 
       - name: Openssl Static Libraries
