@@ -164,11 +164,11 @@ jobs:
           - target: macos-13
             binary_filename: amd64-osx-13
             brew_cellar: "/usr/local/Cellar"
-            brew_install: "brew install automake"
+            brew_install: "brew install automake coreutils"
           - target: macos-latest
             binary_filename: arm64-osx-14
             brew_cellar: "/opt/homebrew/Cellar"
-            brew_install: "brew install autoconf automake libtool"
+            brew_install: "brew install autoconf automake libtool coreutils"
     uses: ./.github/workflows/ci-osx.yml
     secrets: inherit
     with:
