@@ -29,7 +29,7 @@ jobs:
       - name: Check openssl
         run: |
           ls -la /opt/homebrew/Cellar/openssl@3/*/lib
-          echo "openssl_dir=$(cd /opt/homebrew/Cellar/openssl@3/*/lib && pwd)"  >> "$GITHUB_ENV"
+          printf '%s\n' "openssl_dir=$(cd /opt/homebrew/Cellar/openssl@3/*/lib && pwd)" >> "$GITHUB_ENV"
 
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
@@ -40,8 +40,8 @@ jobs:
 
       - name: Set CC
         run: |
-          echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
-          echo "LDFLAGS=-L${{ env.openssl_dir }} -l:libcrypto.a -l:libssl.a"  >> "$GITHUB_ENV"
+          printf '%s\n' "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
+          printf '%s\n' "LDFLAGS=-L${{ env.openssl_dir }} -llibcrypto.a -llibssl.a" >> "$GITHUB_ENV"
 
       - name: Configure
         working-directory: iperf3
