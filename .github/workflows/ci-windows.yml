@@ -35,10 +35,10 @@ jobs:
             filename: ""
             openssl: "no"
           - build: "openssl"
-            filename: "openssl-"
+            filename: "-openssl"
             openssl: "yes"
 
-    name: ${{ matrix.name }}-${{ matrix.arch }}-${{ matrix.filename }}win.zip
+    name: ${{ matrix.name }}-${{ matrix.arch }}-win${{ matrix.filename }}.zip
 
     env:
       cygwin_path: ""

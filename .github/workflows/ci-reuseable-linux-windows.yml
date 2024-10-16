@@ -177,6 +177,7 @@ jobs:
       target: ${{ matrix.target }}
       source_repo: ${{ needs.Scheduled-Defaults.outputs.source_repo }}
       source_branch: ${{ needs.Scheduled-Defaults.outputs.source_branch }}
+      binary_filename: ${{ matrix.binary_filename }}
 
   Release:
     needs: [Linux-Emulation, Linux-Crossbuild, Windows, Osx]
