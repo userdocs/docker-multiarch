@@ -36,11 +36,11 @@ jobs:
       - name: Set CC
         run: |
           echo "CC=clang -target ${{ matrix.target }}$(uname -r)"  >> "$GITHUB_ENV"
-          echo "LDFLAGS=-L${{ github.workspace }}/iperf3/src/.libs -liperf"  >> "$GITHUB_ENV"
+          # echo "LDFLAGS=-L${{ github.workspace }}/iperf3/src/.libs -liperf"  >> "$GITHUB_ENV"
 
       - name: Configure
         working-directory: iperf3
-        run: ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
+        run: ./configure --host="${{ matrix.target }}$(uname -r)" --enable-shared=no --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
 
       - name: Make
         working-directory: iperf3
