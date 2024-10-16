@@ -29,44 +29,32 @@ jobs:
       - name: Clone iperf3 repository
         run: git clone https://github.com/esnet/iperf.git iperf3
 
-      - name: Set CC
-        run: echo "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
-
       - name: Build
         working-directory: iperf3
         run: ./bootstrap.sh
 
-      - name: configure
+      - name: Configure
         working-directory: iperf3
-        run: CC=clang CFLAGS="-O2" LDFLAGS="-static-libgcc -static-libstdc++ -static" ./configure --host="${{ matrix.target }}$(uname -r)" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
+        run: ./configure --host="${{ matrix.target }}" --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
 
-      - name: make
+      - name: Make
         working-directory: iperf3
         run: make -j"$(sysctl -n hw.logicalcpu)"
 
-      - name: make install
+      - name: Make install
         working-directory: iperf3
         run: make install
 
-      - name: test
+      - name: Test
         run: |
-          file ./build/bin/iperf3
-          otool -L ./build/bin/iperf3
+          file ${{ github.workspace }}/build/bin/iperf3
+          otool -L ${{ github.workspace }}/build/bin/iperf3
 
-      - name: copy
-        working-directory: iperf3
-        run: |
-          cp ./src/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
+      - name: Copy
+        run: cp ${{ github.workspace }}/build/bin/iperf3 ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/build
-
-      - name: Upload artifact
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: config.log
-          path: ${{ github.workspace }}/iperf3/config.log
+          path: ${{ github.workspace }}/iperf3-macos-${{ matrix.arch }}
