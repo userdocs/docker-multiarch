@@ -92,7 +92,7 @@ jobs:
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
       linux: ${{ github.event.inputs.linux || 'true' }}
       windows: ${{ github.event.inputs.windows || 'true' }}
-      osx: ${{ github.event.inputs.osx || 'false' }}
+      osx: ${{ github.event.inputs.osx || 'true' }}
       skip_rerun: ${{ github.event.inputs.skip_rerun || 'true' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
@@ -190,8 +190,7 @@ jobs:
   release:
     needs: [linux_emulation, linux_crossbuild, windows, osx]
     if: >
-      contains(join(needs.*.result, ','), 'success') &&
-      !contains(join(needs.*.result, ','), 'failure') &&
+      always() && success() && !failure() &&
       needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
       needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
