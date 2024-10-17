@@ -204,7 +204,7 @@ jobs:
     needs: [Linux-Emulation, Linux-Crossbuild, Release]
     if: >
       always() &&
-      ( contains(join(needs.Linux-*.result, ','), 'success') && !contains(join(needs.Linux-*.result, ','), 'failure') ) &&
+      ( contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') ) &&
       ( needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
