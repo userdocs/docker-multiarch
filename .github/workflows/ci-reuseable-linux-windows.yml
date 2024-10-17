@@ -190,11 +190,6 @@ jobs:
   release:
     needs: [linux_emulation, linux_crossbuild, windows, osx]
     if: >
-      contains(needs.linux_emulation.result, 'success') ||
-      contains(needs.linux_crossbuild.result, 'success') ||
-      contains(needs.windows.result, 'success') ||
-      contains(needs.osx.result, 'success') &&
-      !contains(needs.*.result, 'failure') &&
       needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
       needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
