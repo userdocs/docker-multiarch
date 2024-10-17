@@ -93,7 +93,7 @@ jobs:
       linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'false' }}
       osx: ${{ github.event.inputs.osx || 'false' }}
-      skip_rerun: ${{ github.event.inputs.skip_rerun || 'false' }}
+      skip_rerun: ${{ github.event.inputs.skip_rerun || 'true' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
       - name: Setting Outputs from inputs
