@@ -189,9 +189,6 @@ jobs:
 
   release:
     needs: [linux_emulation, linux_crossbuild, windows, osx]
-    if: >
-      needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
-      needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
     with:
