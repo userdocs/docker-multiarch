@@ -90,9 +90,9 @@ jobs:
       artifacts_only: ${{ github.event.inputs.artifacts_only || 'false' }}
       skip_new_tag_check: ${{ github.event.inputs.skip_new_tag_check || 'true'  }}
       linux_build_type: ${{ github.event.inputs.linux_build_type || 'false' }}
-      linux: ${{ github.event.inputs.linux || 'true' }}
+      linux: ${{ github.event.inputs.linux || 'false' }}
       windows: ${{ github.event.inputs.windows || 'true' }}
-      osx: ${{ github.event.inputs.osx || 'false' }}
+      osx: ${{ github.event.inputs.osx || 'true' }}
       skip_rerun: ${{ github.event.inputs.skip_rerun || 'true' }}
       retries: ${{ github.event.inputs.retries || '1' }}
     steps:
