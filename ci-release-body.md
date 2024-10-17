@@ -39,9 +39,9 @@ Links to scan results
 
 [iperf3-amd64-win-openssl](https://www.virustotal.com/gui/file/5e370e10d11873a050b86d28652d651f065fcae503cc0c53f2ddadaea7316430)
 
-[iperf3-amd64-osx-13](https://www.virustotal.com/gui/file/7dafd547ffd104acce406aa56cd391ba222351c631d42eb495ed656a5275aa4b)
+[iperf3-amd64-osx-13](https://www.virustotal.com/gui/file/de84e3c30a66394f4a30de94b693e29126d68dbf94633c6e491ea8778bc97dce)
 
-[iperf3-arm64-osx-14](https://www.virustotal.com/gui/file/e91da6b47eb42a927410ac66761e143820b8d9458a2dd9008bd3799d57176fcf)
+[iperf3-arm64-osx-14](https://www.virustotal.com/gui/file/fd09223d36d94adb6fec73467cc82526a5b10ed99ce3ea275e98bdfb42b57a0b)
 
 [iperf3-arm32v6](https://www.virustotal.com/gui/file/b36b7535bf7556aa3db2066d0d109bdb31d36a9133ca0439b05eee517bd2da5f)
 
