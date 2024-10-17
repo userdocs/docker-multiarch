@@ -190,8 +190,8 @@ jobs:
   Release:
     needs: [Linux-Emulation, Linux-Crossbuild, Windows, Osx]
     if: >
-      ( always() && contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') ) &&
-      ( needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+      always() && contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') &&
+      needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
     with:
