@@ -190,8 +190,10 @@ jobs:
   Release:
     needs: [Linux-Emulation, Linux-Crossbuild, Windows, Osx]
     if: >
-      contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') &&
-      needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true'
+      contains(join(needs.*.result, ','), 'success') &&
+      !contains(join(needs.*.result, ','), 'failure') &&
+      needs.Scheduled-Defaults.outputs.artifacts_only == 'false' &&
+      needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
     with:
@@ -200,9 +202,11 @@ jobs:
   Docker:
     needs: [Linux-Emulation, Linux-Crossbuild, Release]
     if: >
-      always() && ( contains(needs.Linux-Emulation.result, 'success') || contains(needs.Linux-Crossbuild.result, 'success') ) &&
-      ( !contains(join(needs.*.result, ','), 'failure') && contains(needs.Release.result, 'success') ) &&
-      ( needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+      (contains(needs.Linux-Emulation.result, 'success') || contains(needs.Linux-Crossbuild.result, 'success')) &&
+      !contains(join(needs.*.result, ','), 'failure') &&
+      contains(needs.Release.result, 'success') &&
+      needs.Scheduled-Defaults.outputs.artifacts_only == 'false' &&
+      needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-docker.yml
     secrets: inherit
 
@@ -220,7 +224,11 @@ jobs:
         Release,
         Docker,
       ]
-    if: always() && failure() && ( needs.Scheduled-Defaults.outputs.skip_rerun == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
+    if: >
+      always() &&
+      failure() &&
+      needs.Scheduled-Defaults.outputs.skip_rerun == 'false' &&
+      needs.skip_duplicate_job.outputs.should_skip != 'true'
     name: rerun-on-failure
     runs-on: ubuntu-latest
     steps:
