@@ -129,8 +129,7 @@ jobs:
   Linux-Emulation:
     needs: [Scheduled-Defaults, Iperf3-Tag]
     if: >
-      always() &&
-      ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
+      ( always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
       ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-linux-emulation.yml
     secrets: inherit
@@ -141,8 +140,7 @@ jobs:
   Linux-Crossbuild:
     needs: [Scheduled-Defaults, Iperf3-Tag]
     if: >
-      always() &&
-      ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
+      ( always() needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
       ( needs.Scheduled-Defaults.outputs.linux == 'false' && needs.Scheduled-Defaults.outputs.linux_build_type == 'true' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-linux-crossbuild.yml
     secrets: inherit
@@ -153,8 +151,7 @@ jobs:
   Windows:
     needs: [Scheduled-Defaults, Iperf3-Tag]
     if: >
-      always() &&
-      ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
+      ( always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
       ( needs.Scheduled-Defaults.outputs.windows == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-windows.yml
     secrets: inherit
@@ -166,7 +163,7 @@ jobs:
   Osx:
     needs: [Scheduled-Defaults, Iperf3-Tag]
     if: >
-      always() && ( needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
+      ( always() && needs.Iperf3-Tag.outputs.continue_build == 'yes' || needs.Scheduled-Defaults.outputs.skip_new_tag_check == 'true' ) &&
       ( needs.Scheduled-Defaults.outputs.osx == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     strategy:
       matrix:
@@ -193,8 +190,7 @@ jobs:
   Release:
     needs: [Linux-Emulation, Linux-Crossbuild, Windows, Osx]
     if: >
-      always() &&
-      ( contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') ) &&
+      ( always() && contains(join(needs.*.result, ','), 'success') && !contains(join(needs.*.result, ','), 'failure') ) &&
       ( needs.Scheduled-Defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-release.yml
     secrets: inherit
