@@ -35,13 +35,13 @@ jobs:
 
           for filenames in "${release_sorted[@]}"; do
             virustotal_url="$(head -1 "${filenames}" | tr -d '\n' | tr -d '\r' | tr -d '\r\n')"
-            sed -i -r 's|(\['${filenames//\.url/}'\])\((.*)\)|\1('${virustotal_url}')|' ${{ github.workspace }}/release-body.md
+            sed -i -r 's|(\['${filenames//\.url/}'\])\((.*)\)|\1('${virustotal_url}')|' ${{ github.workspace }}/ci-release-body.md
           done
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change
-          file_pattern: "release-body.md"
+          file_pattern: "ci-release-body.md"
 
       - name: "Publish release ${{ inputs.release_tags }}"
         uses: ncipollo/release-action@v1
@@ -52,5 +52,5 @@ jobs:
           tag: ${{ inputs.release_tags }}
           name: iperf3 ${{ inputs.release_tags }}
           allowUpdates: true
-          bodyFile: release-body.md
+          bodyFile: ci-release-body.md
           token: ${{ github.token }}
