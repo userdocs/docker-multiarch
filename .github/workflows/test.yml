@@ -61,13 +61,8 @@ jobs:
       - name: test iperf3 version
         run: |
           wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win.zip"
-          chmod +x ~/iperf3
-
-          printf '\n%b\n\n' "🟦"
-          file ~/iperf3
-
-          printf '\n%b\n\n' "🟦"
-          otool -L ~/iperf3
+          unzip -qq myarchive.zip
+          chmod +x ~/iperf3.zip
 
           printf '\n%b\n\n' "🟦"
           ~/iperf3 --version
@@ -85,14 +80,9 @@ jobs:
 
       - name: test iperf3 version
         run: |
-          wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip"
-          chmod +x ~/iperf3
-
-          printf '\n%b\n\n' "🟦"
-          file ~/iperf3
-
-          printf '\n%b\n\n' "🟦"
-          otool -L ~/iperf3
+          wget -O ~/iperf3.zip "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip"
+          unzip -qq myarchive.zip
+          chmod +x ~/iperf3.zip
 
           printf '\n%b\n\n' "🟦"
           ~/iperf3 --version
