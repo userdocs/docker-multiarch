@@ -206,6 +206,7 @@ jobs:
   docker:
     needs: [scheduled_defaults, linux_emulation, linux_crossbuild, release]
     if: >
+      always() &&
       !contains(needs.*.result, 'failure') &&
       needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
       needs.skip_duplicate_job.outputs.should_skip != 'true'
