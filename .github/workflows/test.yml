@@ -56,6 +56,9 @@ jobs:
 
   test-windows:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: test iperf3 version
@@ -71,6 +74,9 @@ jobs:
 
   test-windows-openssl:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: test iperf3 version
