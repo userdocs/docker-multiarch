@@ -64,7 +64,7 @@ jobs:
           tar xf iperf3.zip
           ls
           chmod +x iperf3.exe
-          iperf3.exe --version
+          .\iperf3.exe --version
 
       - name: test iperf3 servers
         run: curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n
@@ -79,7 +79,7 @@ jobs:
           tar xf iperf3.zip
           ls
           chmod +x iperf3.exe
-          iperf3.exe --version
+          .\iperf3.exe --version
 
       - name: test iperf3 servers
         run: curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n
