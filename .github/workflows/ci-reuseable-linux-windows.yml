@@ -195,7 +195,8 @@ jobs:
     needs: [scheduled_defaults, linux_emulation, linux_crossbuild, windows, osx]
     if: >
       always() &&
-      !contains(needs.*.result, 'failure') &&
+      ( contains(needs.*.result, 'success') || contains(needs.*.result, 'skipped') ) && !contains(needs.*.result, 'failure') &&
+      ( needs.linux_emulation.result != 'skipped' && needs.linux_crossbuild.result != 'skipped' && needs.windows.result != 'skipped' && needs.osx.result != 'skipped' ) &&
       needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
       needs.skip_duplicate_job.outputs.should_skip != 'true'
     uses: ./.github/workflows/ci-release.yml
