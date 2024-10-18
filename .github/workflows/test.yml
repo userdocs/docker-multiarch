@@ -64,7 +64,7 @@ jobs:
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           Write-Host "`n🟦`n"
-          $HOME\iperf3.exe --version
+          iperf3.exe --version
 
       - name: test iperf3 servers
         run: |
@@ -91,7 +91,7 @@ jobs:
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           Write-Host "`n🟦`n"
-          $HOME\iperf3.exe --version
+          iperf3.exe --version
 
       - name: test iperf3 servers
         run: |
