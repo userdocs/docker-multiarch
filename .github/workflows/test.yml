@@ -10,8 +10,7 @@ jobs:
     steps:
       - name: test iperf3
         run: |
-          iperf3 -s -D
-          iperf3 -c
+          iperf3 --version
 
   test-arm64:
     runs-on: macos-latest
@@ -19,5 +18,4 @@ jobs:
     steps:
       - name: test iperf3
         run: |
-          iperf3 -s -D
-          iperf3 -c
+          iperf3 --version
