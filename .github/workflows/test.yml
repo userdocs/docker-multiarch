@@ -8,6 +8,9 @@ jobs:
     runs-on: macos-13
 
     steps:
+      - name: brew install
+        run: brew install coreutils
+
       - name: test iperf3 version
         run: |
           wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-osx-13"
@@ -30,6 +33,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: brew install
+        run: brew install coreutils
+
       - name: test iperf3 version
         run: |
           wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-arm64-osx-14"
