@@ -67,7 +67,7 @@ jobs:
           .\iperf3.exe --version
 
       - name: test iperf3 servers
-        run: curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n
+        run: $(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n1 | sed 's/iperf3/.\\iperf3.exe/')
 
   test-windows-openssl:
     runs-on: windows-latest
@@ -82,4 +82,4 @@ jobs:
           .\iperf3.exe --version
 
       - name: test iperf3 servers
-        run: curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n
+        run: $(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n1 | sed 's/iperf3/.\\iperf3.exe/')
