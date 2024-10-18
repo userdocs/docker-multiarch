@@ -64,7 +64,7 @@ jobs:
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           printf '\n%b\n\n' "🟦"
-          ~/iperf3 --version
+          .\iperf3 --version
 
       - name: test iperf3 servers
         run: |
@@ -91,7 +91,7 @@ jobs:
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           printf '\n%b\n\n' "🟦"
-          ~/iperf3 --version
+           .\iperf3 --version
 
       - name: test iperf3 servers
         run: |
