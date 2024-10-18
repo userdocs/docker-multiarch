@@ -65,11 +65,12 @@ jobs:
         run: |
           curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win.zip" -o iperf3.zip
           unzip iperf3.zip
+          ls -la
           chmod +x iperf3.exe
-          iperf3.exe --version
+          ./iperf3.exe --version
 
       - name: test iperf3 servers
-        run: $(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1 | sed 's/iperf3/.\\iperf3.exe/')
+        run: ./$(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
 
   test-windows-openssl:
     runs-on: windows-latest
@@ -78,12 +79,13 @@ jobs:
         shell: bash
 
     steps:
-      - name: test iperf3 version
+      - name: Download iperf3
         run: |
           curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win-openssl.zip" -o iperf3.zip
           unzip iperf3.zip
+          ls -la
           chmod +x iperf3.exe
-          iperf3.exe --version
+          ./iperf3.exe --version
 
       - name: test iperf3 servers
-        run: $(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1 | sed 's/iperf3/.\\iperf3.exe/')
+        run: ./$(curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
