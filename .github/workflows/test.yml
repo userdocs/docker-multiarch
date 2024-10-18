@@ -60,11 +60,11 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win.zip" -OutFile "$HOME\iperf3.zip"
+          Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -OutFile "$HOME\iperf3.zip"
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
-          printf '\n%b\n\n' "🟦"
-          .\iperf3 --version
+          Write-Host "`n🟦`n"
+          $HOME\iperf3\iperf3.exe --version
 
       - name: test iperf3 servers
         run: |
@@ -90,8 +90,8 @@ jobs:
           Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -OutFile "$HOME\iperf3.zip"
           Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
-          printf '\n%b\n\n' "🟦"
-           .\iperf3 --version
+          Write-Host "`n🟦`n"
+          $HOME\iperf3\iperf3.exe --version
 
       - name: test iperf3 servers
         run: |
