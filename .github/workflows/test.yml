@@ -60,7 +60,7 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          curl -sL "https://github.com/${{ github.repo }}/releases/latest/download/iperf3-amd64-win.zip" -o iperf3.zip
+          curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win.zip" -o iperf3.zip
           tar xf iperf3.zip
           iperf3.exe --version
 
@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          curl -sL "https://github.com/${{ github.repo }}/releases/latest/download/iperf3-amd64-win-openssl.zip" -o iperf3.zip
+          curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win-openssl.zip" -o iperf3.zip
           tar xf iperf3.zip
           iperf3.exe --version
 
