@@ -62,7 +62,7 @@ jobs:
         run: |
           curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win.zip" -o iperf3.zip
           tar xf iperf3.zip
-          ls -la
+          ls
           chmod +x iperf3.exe
           iperf3.exe --version
 
@@ -77,7 +77,7 @@ jobs:
         run: |
           curl -sL "https://github.com/${{ github.repository }}/releases/latest/download/iperf3-amd64-win-openssl.zip" -o iperf3.zip
           tar xf iperf3.zip
-          ls -la
+          ls
           chmod +x iperf3.exe
           iperf3.exe --version
 
