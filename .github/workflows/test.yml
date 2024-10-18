@@ -8,14 +8,26 @@ jobs:
     runs-on: macos-13
 
     steps:
-      - name: test iperf3
+      - name: test iperf3 version
         run: |
+          curl -Lo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-osx-13
+          chmod +x iperf3
           iperf3 --version
+
+      - name: test iperf3 servers
+        run: |
+          iperf3 -c speedtest.fra1.de.leaseweb.net -p 5201-5210
 
   test-arm64:
     runs-on: macos-latest
 
     steps:
-      - name: test iperf3
+      - name: test iperf3 version
         run: |
+          curl -Lo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-arm64-osx-14
+          chmod +x iperf3
           iperf3 --version
+
+      - name: test iperf3 servers
+        run: |
+          iperf3 -c speedtest.fra1.de.leaseweb.net -p 5201-5210
