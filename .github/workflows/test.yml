@@ -1,162 +1,23 @@
-name: CI
+name: test iperf3 osx
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-amd64:
+  test-amd64:
     runs-on: macos-13
-    strategy:
-      matrix:
-        arch: [amd64]
-        include:
-          - arch: amd64
-            target: x86_64-apple-darwin
-            dlarch: iperf3-amd64
 
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - name: Install packages
+      - name: test iperf3
         run: |
-          brew update || brew update-reset
-          brew install autoconf automake libtool
+          iperf3 -s -D
+          iperf3 -c
 
-      - name: Check openssl
-        run: |
-          ls -la  /usr/local/Cellar/
-          ls -la /usr/local/Cellar/openssl@3/*/lib
-          printf '%s\n' "openssl_dir=$(cd /usr/local/Cellar/openssl@3/*/lib && pwd)" >> "$GITHUB_ENV"
-
-      - name: Openssl Static Libraries
-        run: |
-          mkdir -p ${{ github.workspace }}/openssl_libs
-          cp -fv ${{ env.openssl_dir }}/libcrypto.a ${{ github.workspace }}/openssl_libs/
-          cp -fv ${{ env.openssl_dir }}/libssl.a ${{ github.workspace }}/openssl_libs/
-
-      - name: Check openssl_libs
-        run: ls -la openssl_libs
-
-      - name: Clone iperf3 repository
-        run: git clone https://github.com/esnet/iperf.git iperf3
-
-      - name: Bootstrap
-        working-directory: iperf3
-        run: ./bootstrap.sh
-
-      - name: Set CC
-        run: printf '%s\n' "LDFLAGS=-L${{ github.workspace }}/openssl_libs" >> "$GITHUB_ENV"
-
-      - name: Configure
-        working-directory: iperf3
-        run: ./configure --enable-shared=no --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
-
-      - name: Make
-        working-directory: iperf3
-        run: make -j"$(sysctl -n hw.logicalcpu)"
-
-      - name: Make install
-        working-directory: iperf3
-        run: make install
-
-      - name: Test
-        run: |
-          printf '\n%b\n\n' "🟦"
-          ${{ github.workspace }}/build/bin/iperf3 --version
-          printf '\n%b\n\n' "🟦"
-          file ${{ github.workspace }}/build/bin/iperf3
-          printf '\n%b\n\n' "🟦"
-          otool -L ${{ github.workspace }}/build/bin/iperf3
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/build
-
-      - name: Upload artifact
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/iperf3/config.log
-
-  build-arm64:
+  test-arm64:
     runs-on: macos-latest
-    strategy:
-      matrix:
-        arch: [arm64]
-        include:
-          - arch: arm64
-            target: arm64-apple-darwin
-            dlarch: iperf3-arm64v8
 
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - name: Install packages
+      - name: test iperf3
         run: |
-          brew update || brew update-reset
-          brew install autoconf automake libtool
-
-      - name: Check openssl
-        run: |
-          ls -la /opt/homebrew/Cellar/openssl@3/*/lib
-          printf '%s\n' "openssl_dir=$(cd /opt/homebrew/Cellar/openssl@3/*/lib && pwd)" >> "$GITHUB_ENV"
-
-      - name: Openssl Static Libraries
-        run: |
-          mkdir -p ${{ github.workspace }}/openssl_libs
-          cp -fv ${{ env.openssl_dir }}/libcrypto.a ${{ github.workspace }}/openssl_libs/
-          cp -fv ${{ env.openssl_dir }}/libssl.a ${{ github.workspace }}/openssl_libs/
-
-      - name: Check openssl_libs
-        run: ls -la openssl_libs
-
-      - name: Clone iperf3 repository
-        run: git clone https://github.com/esnet/iperf.git iperf3
-
-      - name: Bootstrap
-        working-directory: iperf3
-        run: ./bootstrap.sh
-
-      - name: Set CC
-        run: |
-          printf '%s\n' "CC=clang -target ${{ matrix.target }}$(uname -r)" >> "$GITHUB_ENV"
-          printf '%s\n' "LDFLAGS=-L${{ github.workspace }}/openssl_libs" >> "$GITHUB_ENV"
-
-      - name: Configure
-        working-directory: iperf3
-        run: ./configure --host="${{ matrix.target }}$(uname -r)" --enable-shared=no --disable-silent-rules --disable-profiling --prefix=${{ github.workspace }}/build
-
-      - name: Make
-        working-directory: iperf3
-        run: make -j"$(sysctl -n hw.logicalcpu)"
-
-      - name: Make install
-        working-directory: iperf3
-        run: make install
-
-      - name: Test
-        run: |
-          printf '\n%b\n\n' "🟦"
-          ${{ github.workspace }}/build/bin/iperf3 --version
-          printf '\n%b\n\n' "🟦"
-          file ${{ github.workspace }}/build/bin/iperf3
-          printf '\n%b\n\n' "🟦"
-          otool -L ${{ github.workspace }}/build/bin/iperf3
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/build
-
-      - name: Upload artifact
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: iperf3-macos-${{ matrix.arch }}
-          path: ${{ github.workspace }}/iperf3/config.log
+          iperf3 -s -D
+          iperf3 -c
