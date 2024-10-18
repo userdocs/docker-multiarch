@@ -5,6 +5,14 @@ on:
     inputs:
       release_tags:
         type: string
+      test_linux_emulation:
+        type: string
+      test_linux_crossbuild:
+        type: string
+      test_windows:
+        type: string
+      test_osx:
+        type: string
 
 env:
   GH_TOKEN: "${{ github.TOKEN }}"
@@ -15,6 +23,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: show inputs
+        run: |
+          echo "release_tags: ${{ inputs.release_tags }}"
+          echo "test_linux_emulation: ${{ inputs.test_linux_emulation }}"
+          echo "test_linux_crossbuild: ${{ inputs.test_linux_crossbuild }}"
+          echo "test_windows: ${{ inputs.test_windows }}"
+          echo "test_osx: ${{ inputs.test_osx }}"
 
       - name: Download artifacts
         uses: actions/download-artifact@v4

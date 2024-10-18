@@ -202,6 +202,10 @@ jobs:
     secrets: inherit
     with:
       release_tags: ${{ needs.linux_emulation.outputs.release_tags || needs.linux_crossbuild.outputs.release_tags || needs.windows.outputs.release_tags || needs.osx.outputs.release_tags }}
+      test_linux_emulation: needs.linux_emulation.result
+      test_linux_crossbuild: needs.linux_crossbuild.result
+      test_windows: needs.windows.result
+      test_osx: needs.osx.result
 
   docker:
     needs: [scheduled_defaults, linux_emulation, linux_crossbuild, release]
