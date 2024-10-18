@@ -60,26 +60,12 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -OutFile "$HOME\iperf3.zip"
-          Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
-
-          Write-Host "`n🟦`n"
+          curl -sL "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -o iperf3.zip
+          tar xf iperf3.zip
           iperf3.exe --version
 
       - name: test iperf3 servers
-        run: |
-          # Download the CSV data
-          $csvData = Invoke-WebRequest -Uri "https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv" -UseBasicParsing
-
-          # Parse the CSV data
-          $parsedData = $csvData.Content | ConvertFrom-Csv
-
-          # Select a random row and extract the first column
-          $randomRow = $parsedData | Get-Random
-          $firstColumnValue = $randomRow.PSObject.Properties[0].Value
-
-          # Output the value
-          $firstColumnValue
+        run: curl -sL https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk 'NR > 1 {print}' | shuf -n
 
   test-windows-openssl:
     runs-on: windows-latest
