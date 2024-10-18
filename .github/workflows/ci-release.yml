@@ -34,9 +34,10 @@ jobs:
           readarray -t release_sorted < <(printf '%s\n' "${dependency_version[@]}" | sort)
 
           if command_output=$(gh release view "${{ inputs.release_tags }}" --repo "${{ github.repository }}" --json body -q .body 2>&1); then
-            echo "$command_output" > ci-release-body.md
+            sed '/<!-- split body -->/ {q}' ci-release-body-template.md > ci-release-body.md
+            printf '%s\n' "$command_output" | sed -n '/<!-- split urls -->/,$p' >> ci-release-body.md
           else
-            echo "Error message: $command_output"
+            cp -f ci-release-body-template.md ci-release-body.md
           fi
 
           for filenames in "${release_sorted[@]}"; do
