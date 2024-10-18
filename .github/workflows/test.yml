@@ -85,9 +85,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: brew install
-        run: brew install coreutils
-
       - name: test iperf3 version
         run: |
           Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -OutFile "$HOME\iperf3.zip"
