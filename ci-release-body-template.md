@@ -26,6 +26,9 @@ gh attestation verify iperf3-amd64 -o userdocs
 
 </details>
 
+<!-- Edit anything above this line to have to automatically update the release body. -->
+<!-- If you need the URLs edited. Edit the release and delete the body text and it will updated from this file -->
+
 <!-- split body -->
 <!-- split urls -->
 
