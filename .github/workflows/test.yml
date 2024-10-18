@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          curl -Lo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-osx-13
+          wget -O iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-osx-13
           chmod +x iperf3
           iperf3 --version
 
@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          curl -Lo- iperf3 https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-arm64-osx-14
+          wget -O iperf3  https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-arm64-osx-14
           chmod +x iperf3
           iperf3 --version
 
