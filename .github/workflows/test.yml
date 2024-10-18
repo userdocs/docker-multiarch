@@ -60,16 +60,26 @@ jobs:
     steps:
       - name: test iperf3 version
         run: |
-          wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win.zip"
-          unzip -qq myarchive.zip
-          chmod +x ~/iperf3.zip
+          Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win.zip" -OutFile "$HOME\iperf3.zip"
+          Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           printf '\n%b\n\n' "🟦"
           ~/iperf3 --version
 
       - name: test iperf3 servers
         run: |
-          ~/$(wget -qO- https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
+          # Download the CSV data
+          $csvData = Invoke-WebRequest -Uri "https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv" -UseBasicParsing
+
+          # Parse the CSV data
+          $parsedData = $csvData.Content | ConvertFrom-Csv
+
+          # Select a random row and extract the first column
+          $randomRow = $parsedData | Get-Random
+          $firstColumnValue = $randomRow.PSObject.Properties[0].Value
+
+          # Output the value
+          $firstColumnValue
 
   test-windows-openssl:
     runs-on: windows-latest
@@ -80,13 +90,23 @@ jobs:
 
       - name: test iperf3 version
         run: |
-          wget -O ~/iperf3.zip "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip"
-          unzip -qq myarchive.zip
-          chmod +x ~/iperf3.zip
+          Invoke-WebRequest -Uri "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-win-openssl.zip" -OutFile "$HOME\iperf3.zip"
+          Expand-Archive -Path "$HOME\iperf3.zip" -DestinationPath "$HOME"
 
           printf '\n%b\n\n' "🟦"
           ~/iperf3 --version
 
       - name: test iperf3 servers
         run: |
-          ~/$(wget -qO- https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
+          # Download the CSV data
+          $csvData = Invoke-WebRequest -Uri "https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv" -UseBasicParsing
+
+          # Parse the CSV data
+          $parsedData = $csvData.Content | ConvertFrom-Csv
+
+          # Select a random row and extract the first column
+          $randomRow = $parsedData | Get-Random
+          $firstColumnValue = $randomRow.PSObject.Properties[0].Value
+
+          # Output the value
+          $firstColumnValue
