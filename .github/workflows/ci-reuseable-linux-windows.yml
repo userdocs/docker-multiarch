@@ -194,7 +194,6 @@ jobs:
   release:
     needs: [scheduled_defaults, linux_emulation, linux_crossbuild, windows, osx]
     if: >
-      always() &&
       ( contains(needs.*.result, 'success') && !contains(needs.*.result, 'failure') )
       && ( needs.scheduled_defaults.outputs.artifacts_only == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     uses: ./.github/workflows/ci-release.yml
@@ -205,7 +204,6 @@ jobs:
   docker:
     needs: [scheduled_defaults, linux_emulation, linux_crossbuild, release]
     if: >
-      always() &&
       contains(needs.release.result, 'success') &&
       !contains(join(needs.*.result, ','), 'failure') &&
       needs.scheduled_defaults.outputs.artifacts_only == 'false' &&
@@ -228,7 +226,6 @@ jobs:
         docker,
       ]
     if: >
-      always() &&
       failure() &&
       ( needs.scheduled_defaults.outputs.skip_rerun == 'false' && needs.skip_duplicate_job.outputs.should_skip != 'true' )
     name: rerun-on-failure
