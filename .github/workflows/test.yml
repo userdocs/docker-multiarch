@@ -12,7 +12,15 @@ jobs:
         run: |
           wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-amd64-osx-13"
           chmod +x ~/iperf3
-          ~/iperf3 --version
+
+          printf '\n%b\n\n' "🟦"
+          file ~/iperf3
+
+          printf '\n%b\n\n' "🟦"
+          otool -L ~/iperf3
+
+          printf '\n%b\n\n' "🟦"
+          iperf3 --~/iperf3
 
       - name: test iperf3 servers
         run: |
@@ -26,7 +34,15 @@ jobs:
         run: |
           wget -O ~/iperf3 "https://github.com/userdocs/iperf3-static/releases/latest/download/iperf3-arm64-osx-14"
           chmod +x ~/iperf3
-          ~/iperf3 --version
+
+          printf '\n%b\n\n' "🟦"
+          file ~/iperf3
+
+          printf '\n%b\n\n' "🟦"
+          otool -L ~/iperf3
+
+          printf '\n%b\n\n' "🟦"
+          iperf3 --~/iperf3
 
       - name: test iperf3 servers
         run: |
