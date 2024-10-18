@@ -26,11 +26,11 @@ jobs:
 
       - name: show inputs
         run: |
-          echo "release_tags: ${{ inputs.release_tags }}"
-          echo "test_linux_emulation: ${{ inputs.test_linux_emulation }}"
-          echo "test_linux_crossbuild: ${{ inputs.test_linux_crossbuild }}"
-          echo "test_windows: ${{ inputs.test_windows }}"
-          echo "test_osx: ${{ inputs.test_osx }}"
+          echo "release_tags: ${{ inputs.release_tags }}" >> $GITHUB_STEP_SUMMARY
+          echo "test_linux_emulation: ${{ inputs.test_linux_emulation }}" >> $GITHUB_STEP_SUMMARY
+          echo "test_linux_crossbuild: ${{ inputs.test_linux_crossbuild }}" >> $GITHUB_STEP_SUMMARY
+          echo "test_windows: ${{ inputs.test_windows }}" >> $GITHUB_STEP_SUMMARY
+          echo "test_osx: ${{ inputs.test_osx }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
