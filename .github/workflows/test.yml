@@ -24,7 +24,7 @@ jobs:
 
       - name: test iperf3 servers
         run: |
-          ~/iperf3 -c speedtest.fra1.de.leaseweb.net -p 5201-5210
+          ~/$(wget -qO- https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
 
   test-arm64:
     runs-on: macos-latest
@@ -46,4 +46,4 @@ jobs:
 
       - name: test iperf3 servers
         run: |
-          ~/iperf3 -c speedtest.fra1.de.leaseweb.net -p 5201-5210
+          ~/$(wget -qO- https://db.iperf3serverlist.net/api/v1/db/public/shared-view/b111407c-43c4-48af-a828-301b698064a3/rows/export/csv | awk -F, 'NR>1 { print $1 }' | shuf -n1)
