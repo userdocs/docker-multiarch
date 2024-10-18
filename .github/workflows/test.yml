@@ -20,7 +20,7 @@ jobs:
           otool -L ~/iperf3
 
           printf '\n%b\n\n' "🟦"
-          iperf3 --~/iperf3
+          ~/iperf3 --version
 
       - name: test iperf3 servers
         run: |
@@ -42,7 +42,7 @@ jobs:
           otool -L ~/iperf3
 
           printf '\n%b\n\n' "🟦"
-          iperf3 --~/iperf3
+          ~/iperf3 --version
 
       - name: test iperf3 servers
         run: |
