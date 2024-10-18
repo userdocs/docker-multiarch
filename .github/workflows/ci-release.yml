@@ -26,7 +26,8 @@ jobs:
 
       - name: Summary - needs results
         run: |
-          printf '\n%s\n\n' "release_tags: \`${{ inputs.release_tags }}\`" >> $GITHUB_STEP_SUMMARY
+          printf '%s\n\n' "## Summary - needs results"
+          printf '%s\n\n' "release_tags: \`${{ inputs.release_tags }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%s\n' "test_linux_emulation: \`${{ inputs.test_linux_emulation }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%s\n' "test_linux_crossbuild: \`${{ inputs.test_linux_crossbuild }}\`" >> $GITHUB_STEP_SUMMARY
           printf '\n%s\n' "test_windows: \`${{ inputs.test_windows }}\`" >> $GITHUB_STEP_SUMMARY
