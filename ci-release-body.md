@@ -33,28 +33,28 @@ gh attestation verify iperf3-amd64 -o userdocs
 
 Links to scan results
 
-[iperf3-amd64](https://www.virustotal.com/gui/file/c2edf5e304231ac11a3b255aa9023abf812e919c5d6543c1c10cc6f2288b1663)
+[iperf3-amd64]()
 
-[iperf3-amd64-win](https://www.virustotal.com/gui/file/8d22ad82e9133c7c963a84fc710f427bffdad69b0aa091add0d23823c6647a68)
+[iperf3-amd64-win]()
 
-[iperf3-amd64-win-openssl](https://www.virustotal.com/gui/file/5e370e10d11873a050b86d28652d651f065fcae503cc0c53f2ddadaea7316430)
+[iperf3-amd64-win-openssl]()
 
-[iperf3-amd64-osx-13](https://www.virustotal.com/gui/file/4a9bfc1420aefe86d2185264e4bdf35c8c6b36ae5202a8b93d9b881713ba034d)
+[iperf3-amd64-osx-13]()
 
-[iperf3-arm64-osx-14](https://www.virustotal.com/gui/file/f043dd9d49e96fa10b8381cfdc6a694bce306a2ae85ae69f081f711edc3f2c0a)
+[iperf3-arm64-osx-14]()
 
-[iperf3-arm32v6](https://www.virustotal.com/gui/file/b2e161ebc20ae007f9a48f8307928cf22974c0bbbd06f7283ef5baf700360531)
+[iperf3-arm32v6]()
 
-[iperf3-arm32v7](https://www.virustotal.com/gui/file/8c4a58f650a0fca272f0a890cb99acdba8dd6250c6a844d3587c2bbb172d1a04)
+[iperf3-arm32v7]()
 
-[iperf3-arm64v8](https://www.virustotal.com/gui/file/c675865493b93e82dd0d2df62dd9d0cc87dc015512be167b7b467d7d812e3e6f)
+[iperf3-arm64v8]()
 
-[iperf3-i386](https://www.virustotal.com/gui/file/a02d1049eaf394b7a95c81157a8cddcc63518f0186058af6799c347161d23c83)
+[iperf3-i386]()
 
-[iperf3-ppc64le](https://www.virustotal.com/gui/file/8fb18d55b801c8196f6d3f78a8f6f1009e27fc925c1de01935e29b65c61dda14)
+[iperf3-ppc64le]()
 
-[iperf3-riscv64](https://www.virustotal.com/gui/file/82267100ac3eff0e5eac743f2b9e714627618c916d8f86d5148f05f8134ce88a)
+[iperf3-riscv64]()
 
-[iperf3-s390x](https://www.virustotal.com/gui/file/2d4c9b9e68e2d67724a9d8d47defc3b841d5bd0d984fde605bfcee17e30e1f23)
+[iperf3-s390x]()
 
 </details>
