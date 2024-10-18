@@ -26,6 +26,8 @@ gh attestation verify iperf3-amd64 -o userdocs
 
 </details>
 
+<!-- split file -->
+
 ## VirusTotal scan results
 
 <details closed>
