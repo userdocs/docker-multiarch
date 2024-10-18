@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: show inputs
+      - name: Summary - needs results
         run: |
           echo "release_tags: ${{ inputs.release_tags }}" >> $GITHUB_STEP_SUMMARY
           echo "test_linux_emulation: ${{ inputs.test_linux_emulation }}" >> $GITHUB_STEP_SUMMARY
